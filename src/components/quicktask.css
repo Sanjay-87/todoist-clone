@@ -1,0 +1,18 @@
+.input-fild{
+    line-height: 30px;
+    border: none;
+    border-right: 1px solid #ddd;
+}
+.add-quick-task{
+    display: flex;
+    border:1px solid #ddd;
+    border-radius: 3px;
+    margin-bottom: 6px;
+}
+button{
+    background: none;
+    border: none;
+    text-align: left;
+    width: 126px;
+    cursor: pointer;
+}

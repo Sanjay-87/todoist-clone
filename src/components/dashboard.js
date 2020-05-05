@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import QuickAddTask from "./quickaddtask";
 
 import { Layout, Menu, Button, Row, Col } from "antd";
 import {
@@ -17,6 +18,13 @@ const { Sider, Content } = Layout;
 class Dashboard extends Component {
     state = {
         collapsed: false,
+        model: false,
+    };
+
+    showPopup = () => {
+      this.setState({
+        model: true,
+      });
     };
 
     onCollapsed = () => {
@@ -24,6 +32,20 @@ class Dashboard extends Component {
             collapsed: !this.state.collapsed,
         });
     };
+
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+        model: false,
+    });
+  };
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+        model: false,
+    });
+  };
 
     render() {
         return (
@@ -36,12 +58,15 @@ class Dashboard extends Component {
                             </Button>
                         </Col>
                         <Col span={1} offset={20}>
-                            <PlusOutlined
+                            <PlusOutlined 
                                 style={{
                                     color: "#613400",
                                     fontSize: "30px",
                                 }}
+                                onClick={this.showPopup}
                             />
+                                   {this.state.model ? (<QuickAddTask model={this.state.model} 
+                                   handleOk={this.handleOk} handleCancel={this.handleCancel} />) : ("")}
                         </Col>
                         <Col span={1}>
                             <SettingFilled
