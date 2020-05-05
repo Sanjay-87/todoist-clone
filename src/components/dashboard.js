@@ -1,6 +1,11 @@
 import React, { Component } from "react";
+import { Route, Link, Switch } from "react-router-dom";
 
-import { Layout, Menu, Button, Row, Col } from "antd";
+import Project from "./project";
+import Today from "./today";
+import Upcoming from "./upcoming";
+
+import { Layout, Menu, Button, Row, Col, Icon } from "antd";
 import {
     MenuOutlined,
     ContainerTwoTone,
@@ -45,6 +50,7 @@ class Dashboard extends Component {
                         </Col>
                     </Row>
                 </Menu>
+
                 <Layout>
                     <Sider
                         style={{ backgroundColor: "#eaff8f" }}
@@ -55,18 +61,24 @@ class Dashboard extends Component {
                     >
                         <Menu
                             mode='inline'
-                            defaultSelectedKeys={["Today"]}
+                            defaultSelectedKeys={["/"]}
                             defaultOpenKeys={["Projects"]}
                             style={{ backgroundColor: "#eaff8f" }}
                         >
-                            <Menu.Item key='Inbox' icon={<ContainerTwoTone />}>
-                                Inbox
+                            <Menu.Item key='/inbox'>
+                                <Link to='/inbox'>
+                                    <span>Inbox</span>
+                                </Link>
                             </Menu.Item>
-                            <Menu.Item key='Today' icon={<CarryOutTwoTone />}>
-                                Today
+                            <Menu.Item key='/'>
+                                <Link>
+                                    <span>Today</span>
+                                </Link>
                             </Menu.Item>
-                            <Menu.Item key='Upcoming' icon={<ScheduleTwoTone />}>
-                                Upcoming
+                            <Menu.Item key='/upcoming'>
+                                <Link>
+                                    <span>Upcoming</span>
+                                </Link>
                             </Menu.Item>
                             <SubMenu key='Projects' icon={<ProjectTwoTone />} title='Projects'>
                                 <Menu.Item key='5'>project 1</Menu.Item>
@@ -81,7 +93,12 @@ class Dashboard extends Component {
                             ></SubMenu>
                         </Menu>
                     </Sider>
-                    <Content style={{ backgroundColor: "#f4ffb8" }}>content</Content>
+
+                    <Content style={{ backgroundColor: "#f4ffb8" }}>
+                        <Route key='/' path='/' exact component={Today} />
+                        <Route key='/inbox' path='/inbox' exact component={Project} />
+                        <Route key='/upcoming' path='/upcoming' exact component={Upcoming} />
+                    </Content>
                 </Layout>
             </Layout>
         );
