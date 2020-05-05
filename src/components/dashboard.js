@@ -3,12 +3,14 @@ import React, { Component } from "react";
 import { Layout, Menu, Button, Row, Col } from "antd";
 import {
     MenuOutlined,
-    InboxOutlined,
-    DesktopOutlined,
-    ContainerOutlined,
-    ProjectOutlined,
-    SettingFilled,
-    PlusOutlined,
+    ContainerTwoTone,
+    CarryOutTwoTone,
+    ScheduleTwoTone,
+    ProjectTwoTone,
+    BookTwoTone,
+    SettingTwoTone,
+    PlusCircleTwoTone,
+    LayoutTwoTone,
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -36,20 +38,10 @@ class Dashboard extends Component {
                             </Button>
                         </Col>
                         <Col span={1} offset={20}>
-                            <PlusOutlined
-                                style={{
-                                    color: "#613400",
-                                    fontSize: "30px",
-                                }}
-                            />
+                            <PlusCircleTwoTone twoToneColor='#fa541c' style={{ fontSize: 30 }} />
                         </Col>
                         <Col span={1}>
-                            <SettingFilled
-                                style={{
-                                    color: "#613400",
-                                    fontSize: "30px",
-                                }}
-                            />
+                            <SettingTwoTone twoToneColor='#fa541c' style={{ fontSize: 30 }} />
                         </Col>
                     </Row>
                 </Menu>
@@ -63,32 +55,30 @@ class Dashboard extends Component {
                     >
                         <Menu
                             mode='inline'
-                            defaultSelectedKeys={["1"]}
+                            defaultSelectedKeys={["Today"]}
                             defaultOpenKeys={["Projects"]}
                             style={{ backgroundColor: "#eaff8f" }}
                         >
-                            <Menu.Item key='Inbox' icon={<InboxOutlined />}>
+                            <Menu.Item key='Inbox' icon={<ContainerTwoTone />}>
                                 Inbox
                             </Menu.Item>
-                            <Menu.Item key='Today' icon={<DesktopOutlined />}>
+                            <Menu.Item key='Today' icon={<CarryOutTwoTone />}>
                                 Today
                             </Menu.Item>
-                            <Menu.Item key='Upcoming' icon={<ContainerOutlined />}>
+                            <Menu.Item key='Upcoming' icon={<ScheduleTwoTone />}>
                                 Upcoming
                             </Menu.Item>
-                            <SubMenu key='Projects' icon={<ProjectOutlined />} title='Projects'>
+                            <SubMenu key='Projects' icon={<ProjectTwoTone />} title='Projects'>
                                 <Menu.Item key='5'>project 1</Menu.Item>
                                 <Menu.Item key='6'>Project 2</Menu.Item>
                                 <Menu.Item key='7'>Project 2</Menu.Item>
                             </SubMenu>
+                            <SubMenu key='Labels' icon={<BookTwoTone />} title='Labels'></SubMenu>
                             <SubMenu
-                                key='Labels'
-                                icon={<ProjectOutlined />}
-                                title='Labels'
+                                key='Filters'
+                                icon={<LayoutTwoTone />}
+                                title='Filters'
                             ></SubMenu>
-                            <SubMenu key='Filters' icon={<ProjectOutlined />} title='Filters'>
-                                <Menu.Item key='5'>Option 5</Menu.Item>
-                            </SubMenu>
                         </Menu>
                     </Sider>
                     <Content style={{ backgroundColor: "#f4ffb8" }}>content</Content>
