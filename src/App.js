@@ -1,15 +1,19 @@
 import React from "react";
-import "./App.css";
-
+import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+
+import "./App.css";
+import store from "./store";
 
 import Dashboard from "./components/dashboard";
 
 function App() {
     return (
-        <Router>
-            <Dashboard />
-        </Router>
+        <Provider store={store}>
+            <Router>
+                <Dashboard />
+            </Router>
+        </Provider>
     );
 }
 

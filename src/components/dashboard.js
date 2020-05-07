@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-import { Route, Link, Switch } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
+import { connect } from "react-redux";
 
+import color from "../color";
 import Project from "./project";
 import Today from "./today";
 import Upcoming from "./upcoming";
 
-import { Layout, Menu, Button, Row, Col, Icon } from "antd";
+import { fetchProjects } from "../actions/projectActions";
+
+import { Layout, Menu, Button, Row, Col } from "antd";
 import {
     MenuOutlined,
     ContainerTwoTone,
@@ -16,6 +20,8 @@ import {
     SettingTwoTone,
     PlusCircleTwoTone,
     LayoutTwoTone,
+    CheckCircleFilled,
+    PlusOutlined,
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -31,6 +37,10 @@ class Dashboard extends Component {
             collapsed: !this.state.collapsed,
         });
     };
+
+    componentDidMount() {
+        this.props.fetchProjects();
+    }
 
     render() {
         return (
@@ -63,31 +73,48 @@ class Dashboard extends Component {
                             mode='inline'
                             defaultSelectedKeys={["/"]}
                             defaultOpenKeys={["Projects"]}
+                            // selectedKeys={[window.location.pathname]}
                             style={{ backgroundColor: "#eaff8f" }}
                         >
                             <Menu.Item key='/inbox'>
-                                <Link to='/inbox'>
+                                <Link to='/project/inbox'>
+                                    <ContainerTwoTone />
                                     <span>Inbox</span>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key='/'>
-                                <Link>
+                                <Link to='/'>
+                                    <CarryOutTwoTone />
                                     <span>Today</span>
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key='/upcoming'>
-                                <Link>
+                                <Link to='/upcoming'>
+                                    <ScheduleTwoTone />
                                     <span>Upcoming</span>
                                 </Link>
                             </Menu.Item>
                             <SubMenu key='Projects' icon={<ProjectTwoTone />} title='Projects'>
-                                <Menu.Item key='5'>project 1</Menu.Item>
-                                <Menu.Item key='6'>Project 2</Menu.Item>
-                                <Menu.Item key='7'>Project 2</Menu.Item>
+                                {this.props.projects
+                                    .filter(project => project.name !== "Inbox")
+                                    .map(project => (
+                                        <Menu.Item key={project.id}>
+                                            <Link to={`/project/${project.name}`}>
+                                                <CheckCircleFilled
+                                                    style={{ color: color[`${project.color}`] }}
+                                                />
+                                                <span>{project.name}</span>
+                                            </Link>
+                                        </Menu.Item>
+                                    ))}
+                                <Button block>
+                                    <PlusOutlined />
+                                    Add Project
+                                </Button>
                             </SubMenu>
-                            <SubMenu key='Labels' icon={<BookTwoTone />} title='Labels'></SubMenu>
+                            <SubMenu key='labels' icon={<BookTwoTone />} title='Labels'></SubMenu>
                             <SubMenu
-                                key='Filters'
+                                key='filters'
                                 icon={<LayoutTwoTone />}
                                 title='Filters'
                             ></SubMenu>
@@ -95,9 +122,9 @@ class Dashboard extends Component {
                     </Sider>
 
                     <Content style={{ backgroundColor: "#f4ffb8" }}>
-                        <Route key='/' path='/' exact component={Today} />
-                        <Route key='/inbox' path='/inbox' exact component={Project} />
-                        <Route key='/upcoming' path='/upcoming' exact component={Upcoming} />
+                        <Route path='/' exact component={Today} />
+                        <Route path='/upcoming' exact component={Upcoming} />
+                        <Route path='/project/:title' exact component={Project} />
                     </Content>
                 </Layout>
             </Layout>
@@ -105,4 +132,5 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = state => ({ projects: state.projectReducer.projects });
+export default connect(mapStateToProps, { fetchProjects })(Dashboard);
