@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import QuickAddTask from "./quickaddtask";
+import AddProject from "./addProject";
+import InboxTask from "./inboxTask";
 import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -30,13 +33,42 @@ const { Sider, Content } = Layout;
 class Dashboard extends Component {
     state = {
         collapsed: false,
+        modalOfTask: false,
+        modalOfProject: false,
     };
 
-    onCollapsed = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
+    showPopupTask = () => {
+      this.setState({
+        modalOfTask: true,
+      });
     };
+
+    showPopupProject = () => {
+        this.setState({
+          modalOfProject: true,
+        });
+      };
+
+
+  handleCancelTask = e => {
+    console.log(e);
+    this.setState({
+        modalOfTask: false,
+    });
+  };
+
+  handleCancelProject = e => {
+    console.log(e);
+    this.setState({
+        modalOfProject: false,
+    });
+  };
+
+  onCollapsed = () => {
+    this.setState({
+        collapsed: !this.state.collapsed,
+    });
+};
 
     componentDidMount() {
         this.props.fetchProjects();
@@ -53,7 +85,16 @@ class Dashboard extends Component {
                             </Button>
                         </Col>
                         <Col span={1} offset={20}>
-                            <PlusCircleTwoTone twoToneColor='#fa541c' style={{ fontSize: 30 }} />
+                            <PlusOutlined 
+                                style={{
+                                    color: "#613400",
+                                    fontSize: "30px",
+                                }}
+                                onClick={this.showPopupTask}
+                            />
+                                   {this.state.modalOfTask ? (<QuickAddTask modalOfTask={this.state.modalOfTask} 
+                                   handleCancelTask={this.handleCancelTask} />) : null}
+                            // <PlusCircleTwoTone twoToneColor='#fa541c' style={{ fontSize: 30 }} />
                         </Col>
                         <Col span={1}>
                             <SettingTwoTone twoToneColor='#fa541c' style={{ fontSize: 30 }} />
@@ -107,10 +148,12 @@ class Dashboard extends Component {
                                             </Link>
                                         </Menu.Item>
                                     ))}
-                                <Button block>
+                                <Button block onClick={this.showPopupProject}>
                                     <PlusOutlined />
                                     Add Project
                                 </Button>
+                                {this.state.modalOfProject ? (<AddProject modalOfProject={this.state.modalOfProject} 
+                                    handleCancelProject={this.handleCancelProject} />):""}
                             </SubMenu>
                             <SubMenu key='labels' icon={<BookTwoTone />} title='Labels'></SubMenu>
                             <SubMenu
@@ -120,7 +163,6 @@ class Dashboard extends Component {
                             ></SubMenu>
                         </Menu>
                     </Sider>
-
                     <Content style={{ backgroundColor: "#f4ffb8" }}>
                         <Route path='/' exact component={Today} />
                         <Route path='/upcoming' exact component={Upcoming} />

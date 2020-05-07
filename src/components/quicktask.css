@@ -1,0 +1,37 @@
+.input-fild{
+    line-height: 30px;
+    border: none;
+    border-right: 1px solid #ddd;
+}
+.add-quick-task{
+    display: flex;
+    border:1px solid #ddd;
+    border-radius: 3px;
+    margin-bottom: 6px;
+}
+.add-task-btn {
+    background: #db4c3f ;
+    margin-right: 2%;
+    border: none;
+    text-align: center;
+    width: 80px;
+    height: 30px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.cancle-task-btn{
+    border: none;
+    background: whitesmoke;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    margin-right:50%;
+    height: 30px;
+}
+
+
+
+
+
+ 
+ 
