@@ -1,20 +1,14 @@
 import { Modal, Form, Input, DatePicker } from "antd";
 import React, { Component } from "react";
 import "./quicktask.css";
-import {
-  TagOutlined,
-  UnorderedListOutlined,
-} from "@ant-design/icons";
-
+import { TagOutlined, UnorderedListOutlined } from "@ant-design/icons";
 
 class QuickAddTask extends Component {
- 
   onChange = (date, dateString) => {
     console.log(date, dateString);
   };
-  
+
   render() {
-    
     return (
       <div>
         <Modal
@@ -30,7 +24,11 @@ class QuickAddTask extends Component {
               <DatePicker onChange={this.onChange} />
             </div>
             <div className="add-quick-task-footer">
-              <button  type="submit" className="add-task-btn" onClick={this.props.handleCancelTask}>
+              <button
+                type="submit"
+                className="add-task-btn"
+                onClick={this.props.handleCancelTask}
+              >
                 Add Task
               </button>
               <button
@@ -39,9 +37,10 @@ class QuickAddTask extends Component {
               >
                 Cancle
               </button>
-              <UnorderedListOutlined style={{fontSize:"23px",marginRight:"10px"}}/>
-              <TagOutlined style={{fontSize:"23px"}}/>
-              
+              <UnorderedListOutlined
+                style={{ fontSize: "23px", marginRight: "10px" }}
+              />
+              <TagOutlined style={{ fontSize: "23px" }} />
             </div>
           </Form>
         </Modal>

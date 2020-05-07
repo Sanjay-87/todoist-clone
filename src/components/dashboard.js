@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import QuickAddTask from "./quickaddtask";
 import AddProject from "./addProject";
+import InboxTask from "./inboxTask";
 
 import { Layout, Menu, Button, Row, Col } from "antd";
 import {
@@ -130,7 +131,7 @@ class Dashboard extends Component {
                         </Menu>
                     </Sider>
                     <Content style={{ backgroundColor: "#f4ffb8" }}>
-                        content
+                        <InboxTask/>
                         </Content>
                 </Layout>
             </Layout>
