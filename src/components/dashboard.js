@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import QuickAddTask from "./quickaddtask";
 import AddProject from "./addProject";
-import InboxTask from "./inboxTask";
 import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -21,7 +20,6 @@ import {
     ProjectTwoTone,
     BookTwoTone,
     SettingTwoTone,
-    PlusCircleTwoTone,
     LayoutTwoTone,
     CheckCircleFilled,
     PlusOutlined,
@@ -77,7 +75,7 @@ class Dashboard extends Component {
     render() {
         return (
             <Layout style={{ minHeight: "100vh" }}>
-                <Menu style={{ backgroundColor: "#d3f261" }}>
+                <Menu style={{ backgroundColor: "#db4c3f" }}>
                     <Row style={{ margin: 5 }}>
                         <Col span={1} offset={1}>
                             <Button type='primary' onClick={this.onCollapsed} ghost>
@@ -87,24 +85,23 @@ class Dashboard extends Component {
                         <Col span={1} offset={20}>
                             <PlusOutlined 
                                 style={{
-                                    color: "#613400",
+                                    color: "#fff",
                                     fontSize: "30px",
                                 }}
                                 onClick={this.showPopupTask}
                             />
                                    {this.state.modalOfTask ? (<QuickAddTask modalOfTask={this.state.modalOfTask} 
                                    handleCancelTask={this.handleCancelTask} />) : null}
-                            // <PlusCircleTwoTone twoToneColor='#fa541c' style={{ fontSize: 30 }} />
                         </Col>
                         <Col span={1}>
-                            <SettingTwoTone twoToneColor='#fa541c' style={{ fontSize: 30 }} />
+                            <SettingTwoTone twoToneColor='#fff' style={{ fontSize: 30 }} />
                         </Col>
                     </Row>
                 </Menu>
 
                 <Layout>
                     <Sider
-                        style={{ backgroundColor: "#eaff8f" }}
+                        style={{ backgroundColor: "#fafafa" }}
                         trigger={null}
                         collapsible
                         collapsed={this.state.collapsed}
@@ -114,12 +111,11 @@ class Dashboard extends Component {
                             mode='inline'
                             defaultSelectedKeys={["/"]}
                             defaultOpenKeys={["Projects"]}
-                            // selectedKeys={[window.location.pathname]}
-                            style={{ backgroundColor: "#eaff8f" }}
+                            style={{ backgroundColor: "#fafafa" }}
                         >
                             <Menu.Item key='/inbox'>
                                 <Link to='/project/inbox'>
-                                    <ContainerTwoTone />
+                                     <ContainerTwoTone /> 
                                     <span>Inbox</span>
                                 </Link>
                             </Menu.Item>
@@ -163,7 +159,7 @@ class Dashboard extends Component {
                             ></SubMenu>
                         </Menu>
                     </Sider>
-                    <Content style={{ backgroundColor: "#f4ffb8" }}>
+                    <Content style={{ backgroundColor: "#ffffff", padding: "80px 55px 84px" }}>
                         <Route path='/' exact component={Today} />
                         <Route path='/upcoming' exact component={Upcoming} />
                         <Route path='/project/:title' exact component={Project} />
