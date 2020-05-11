@@ -1,6 +1,8 @@
-import { Modal, Button, Input, Switch, Typography, Select, Badge } from "antd";
 import React, { Component } from "react";
 import "./addProject.css";
+
+import { Modal, Button, Input, Switch, Typography, Select, Badge } from "antd";
+const { Title } = Typography;
 
 const children = [];
 const { Option } = Select;
@@ -61,6 +63,10 @@ class AddProject extends Component {
     size: "default",
   };
 
+  addProject = () => {
+    console.log("added");
+  };
+
   handleChange = value => {
     console.log(`Selected: ${value}`);
   };
@@ -69,48 +75,46 @@ class AddProject extends Component {
   };
 
   render() {
-    const { Title } = Typography;
     const { size } = this.state;
     return (
-      <div>
-        <Modal
-          title={<Title level={3}> Project name</Title>}
-          visible={this.props.modalOfProject}
-          style={{ top: 60 }}
-          onCancel={this.props.handleCancelProject}
-          footer={[
-            <Button onClick={this.props.handleCancelProject} className='cancelbtn'>
-              Cancel
-            </Button>,
-            <Button onClick={this.props.handleCancelProject} className='addbtn'>
-              Add
-            </Button>,
-          ]}
-        >
-          <div className='project-modal-body'>
-            <div className='project-input'>
-              <Title level={4}> Project name</Title>
-              <Input />
-            </div>
-            <div className='project-color'>
-              <Title level={4}>Project color</Title>
-              <Select
-                size={size}
-                defaultValue='Charcoal'
-                onChange={this.handleChange}
-                style={{ width: "100%" }}
-              >
-                {children}
-              </Select>
-            </div>
-
-            <div className='add-to-favorate'>
-              <Switch onChange={this.onChange} />
-              <span>Add to favorities</span>
-            </div>
+      <Modal
+        title={<Title level={4}>Add project</Title>}
+        visible={this.props.modalOfProject}
+        style={{ top: 100 }}
+        onCancel={this.props.handleCancelProject}
+        footer={[
+          <Button onClick={this.props.handleCancelProject} className='cancelbtn'>
+            Cancel
+          </Button>,
+          <Button onClick={this.props.handleCancelProject} className='addbtn'>
+            Add
+          </Button>,
+        ]}
+      >
+        <div className='project-modal-body'>
+          <div className='project-input'>
+            <Title level={4}> Project name</Title>
+            <Input />
           </div>
-        </Modal>
-      </div>
+
+          <div className='project-color'>
+            <Title level={4}>Project color</Title>
+            <Select
+              size={size}
+              defaultValue='Charcoal'
+              onChange={this.handleChange}
+              style={{ width: "100%" }}
+            >
+              {children}
+            </Select>
+          </div>
+
+          <div className='add-to-favorate'>
+            <Switch onChange={this.onChange} />
+            <span>Add to favorities</span>
+          </div>
+        </div>
+      </Modal>
     );
   }
 }

@@ -22,6 +22,7 @@ import {
   EllipsisOutlined,
   DeleteOutlined,
   EditOutlined,
+  BookTwoTone,
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -185,7 +186,7 @@ class Dashboard extends Component {
                   />
                 ) : null}
               </SubMenu>
-              <SubMenu key='Filters' title='Filters'>
+              <SubMenu key='Filters' title='Filters' icon={<BookTwoTone />}>
                 <Menu.Item key='Filter-1'>filter-1</Menu.Item>
                 <Menu.Item key='Filter-2'>filter-2</Menu.Item>
                 <Menu.Item key='Filter-3'>filter-3</Menu.Item>
