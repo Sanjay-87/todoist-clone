@@ -61,10 +61,10 @@ class AddProject extends Component {
     size: "default",
   };
 
-  handleChange = (value) => {
+  handleChange = value => {
     console.log(`Selected: ${value}`);
   };
-  onChange = (checked) => {
+  onChange = checked => {
     console.log(`switch to ${checked}`);
   };
 
@@ -79,28 +79,24 @@ class AddProject extends Component {
           style={{ top: 60 }}
           onCancel={this.props.handleCancelProject}
           footer={[
-            <Button
-              onClick={this.props.handleCancelProject}
-              className="cancelbtn"
-            >
+            <Button onClick={this.props.handleCancelProject} className='cancelbtn'>
               Cancel
             </Button>,
-            <Button onClick={this.props.handleCancelProject} className="addbtn">
+            <Button onClick={this.props.handleCancelProject} className='addbtn'>
               Add
             </Button>,
           ]}
         >
-          <div className="project-modal-body">
-            <div className="project-input">
+          <div className='project-modal-body'>
+            <div className='project-input'>
               <Title level={4}> Project name</Title>
               <Input />
             </div>
-
-            <div className="project-color">
+            <div className='project-color'>
               <Title level={4}>Project color</Title>
               <Select
                 size={size}
-                defaultValue="Charcoal"
+                defaultValue='Charcoal'
                 onChange={this.handleChange}
                 style={{ width: "100%" }}
               >
@@ -108,7 +104,7 @@ class AddProject extends Component {
               </Select>
             </div>
 
-            <div className="add-to-favorate">
+            <div className='add-to-favorate'>
               <Switch onChange={this.onChange} />
               <span>Add to favorities</span>
             </div>
