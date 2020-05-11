@@ -1,37 +1,54 @@
-.input-fild{
-    line-height: 30px;
-    border: none;
-    border-right: 1px solid #ddd;
+.input-fild {
+  line-height: 30px;
+  border: none;
+  border-right: 1px solid #ddd;
 }
-.add-quick-task{
-    display: flex;
-    border:1px solid #ddd;
-    border-radius: 3px;
-    margin-bottom: 6px;
+.add-quick-task {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-bottom: 6px;
 }
-.add-task-btn {
-    background: #db4c3f ;
-    margin-right: 2%;
-    border: none;
-    text-align: center;
-    width: 80px;
-    height: 30px;
-    border-radius: 3px;
+.btn-icon {
+  font-size: 13px;
+  color: #202020;
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding: 0;
+  margin-left: 8%;
+}
+
+.btn-icon:hover {
+  color: #202020;
+  background-color: #eee;
+  padding: 0;
+  margin-left: 8%;
+}
+.displayhide {
+  display: none;
+}
+
+.plus-icon {
+  color: #db4c3f;
+}
+.plus-btn-content {
+  color: gray;
+}
+.add-section{
+    display:flex;
+    padding-top:25px;
+    color: #db4c3f;
     cursor: pointer;
 }
-.cancle-task-btn{
-    border: none;
-    background: whitesmoke;
-    border-radius: 3px;
-    cursor: pointer;
+.add-section-text{
+    width: 20%;
     text-align: center;
-    margin-right:50%;
-    height: 30px;
+}
+hr{
+    width: 100%;
 }
 
 
 
-
-
- 
- 
