@@ -1,7 +1,8 @@
-import { Modal, Form, Input, DatePicker } from "antd";
+import { Form, Input, Button,DatePicker,Modal,Row,Col} from 'antd';
 import React, { Component } from "react";
 import "./quicktask.css";
-import { TagOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import {ProjectIcon,LabelIcon,PriorityIcon,ReminderIcon } from "../svgImages";
+
 
 class QuickAddTask extends Component {
   onChange = (date, dateString) => {
@@ -13,36 +14,38 @@ class QuickAddTask extends Component {
       <div>
         <Modal
           title="Quick Add Task"
-          style={{ top: 60 }}
+          style={{ top: 50}}
           visible={this.props.modalOfTask}
           onCancel={this.props.handleCancelTask}
           footer={null}
         >
-          <Form>
-            <div className="add-quick-task">
-              <Input className="input-fild" />
-              <DatePicker onChange={this.onChange} />
-            </div>
-            <div className="add-quick-task-footer">
-              <button
-                type="submit"
-                className="add-task-btn"
-                onClick={this.props.handleCancelTask}
-              >
-                Add Task
-              </button>
-              <button
-                className="cancle-task-btn"
-                onClick={this.props.handleCancelTask}
-              >
-                Cancle
-              </button>
-              <UnorderedListOutlined
-                style={{ fontSize: "23px", marginRight: "10px" }}
-              />
-              <TagOutlined style={{ fontSize: "23px" }} />
-            </div>
-          </Form>
+           <Form>
+              <Row style={{margin:"5px"}}>
+                  <Col md={18}>
+                  <Input style={{lineHeight:"30px"}}/>
+                  </Col>
+                  <Col md={6}>
+                  <DatePicker onChange={this.onChange} style={{lineHeight:"30px"}}/>
+                  </Col>
+              </Row>
+
+              <Row >
+              <Col md={14}>  
+              <Button htmlType="submit" className="addbtn" style={{margin:"5px"}}onClick={this.props.handleCancelTask}>
+                  Add task
+                </Button>
+              <Button className="cancelbtn"  onClick={this.props.handleCancelTask}>
+                  Cancel
+              </Button>
+              </Col>
+              <Col md={10} >
+                  <Button className="btn-icon"><ProjectIcon/></Button>
+                  <Button className="btn-icon"><LabelIcon/></Button>
+                  <Button className="btn-icon"><PriorityIcon/></Button>
+                  <Button className="btn-icon"><ReminderIcon/></Button>
+              </Col>
+              </Row>
+              </Form>
         </Modal>
       </div>
     );
@@ -50,3 +53,6 @@ class QuickAddTask extends Component {
 }
 
 export default QuickAddTask;
+
+
+
