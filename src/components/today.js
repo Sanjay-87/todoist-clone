@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import {ProjectIcon,LabelIcon,PriorityIcon,ReminderIcon ,PlusIcon} from "../svgImages";
-import { Form, Input, Button,DatePicker,Typography,Row,Col} from 'antd';
+import {ProjectIcon,LabelIcon,PriorityIcon,ReminderIcon ,PlusIcon,EditIcon,ScheduleIcon,CommentIcon,
+  MenuIcon} from "../svgImages";
+import { Form, Input, Button,DatePicker,Typography,Row,Col,Checkbox} from 'antd';
 import "./quicktask.css";
 
 const { Title } = Typography;
@@ -21,6 +22,11 @@ class Today extends Component {
              showform:!this.state.showform,
         })
       }
+      checkbox=(e) =>{
+        console.log(`checked = ${e.target.checked}`)
+      }
+      
+     
 
     render() {  
         return (
@@ -28,6 +34,18 @@ class Today extends Component {
             <Col md={24}>
               <Title level={3}> Today</Title>
               </Col>
+              <Row>
+                <Col  md={15} >
+                <Checkbox onChange={this.checkbox} style={{marginRight:"20px"}}/>
+                <span style={{color:"#333"}}>task name</span>
+                </Col>
+                <Col md={4} offset={5}>
+                   <Button className="btn-icon"> <EditIcon/></Button>
+                  <Button className="btn-icon"><ScheduleIcon/></Button>
+                  <Button className="btn-icon"><CommentIcon/></Button>
+                  <Button className="btn-icon"><MenuIcon/></Button>       
+                </Col>
+              </Row>
             <Row>
             <Button  type="link" onClick={this.addTask} 
             className={`${this.state.showform ? "displayhide" : ""}` }>
