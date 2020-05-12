@@ -26,6 +26,40 @@ class Today extends Component {
     console.log(date, dateString);
   };
 
+
+      addTask=()=>{
+        this.setState({
+             showform:!this.state.showform,
+        })
+      }
+      checkbox=(e) =>{
+        console.log(`checked = ${e.target.checked}`)
+      }
+      
+    render() {  
+        return (
+            <>
+            <Col md={24}>
+              <Title level={3}> Today</Title>
+              </Col>
+              <Row>
+                <Col  md={15} >
+                <Checkbox onChange={this.checkbox} style={{marginRight:"20px"}}/>
+                <span style={{color:"#333"}}>task name</span>
+                </Col>
+                <Col md={4} offset={5}>
+                   <Button className="btn-icon"> <EditIcon/></Button>
+                  <Button className="btn-icon"><ScheduleIcon/></Button>
+                  <Button className="btn-icon"><CommentIcon/></Button>
+                  <Button className="btn-icon"><MenuIcon/></Button>       
+                </Col>
+              </Row>
+            <Row>
+            <Button  type="link" onClick={this.addTask} 
+            className={`${this.state.showform ? "displayhide" : ""}` }>
+             <PlusIcon  className="plus-icon"/>   
+            <span className="plus-btn-content">Add task</span>
+
   addTask = () => {
     this.setState({
       showform: !this.state.showform,

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-//Copmponents
 import colors from "../colors";
 import Project from "./project";
 import Today from "./today";
@@ -146,12 +145,11 @@ class Dashboard extends Component {
                 {this.props.projects
                   .filter(project => project.name !== "Inbox")
                   .map(project => (
-                    <Menu.Item key={`${project.id}`} className='project-menu-item'>
-                      <Link
-                        to={`/project/${project.name}`}
-                        onClick={() => this.onMenuItemSelect(`${project.id}`)}
-                      >
-                        <CheckCircleFilled style={{ color: colors[`${project.color}`].colorId }} />
+                    <Menu.Item key={project.id} className='project-menu-item'>
+                      <Link to={`/project/${project.id}/name/${project.name}`}
+                       onClick={() => this.onMenuItemSelect(`${project.id}`)}>
+                      
+                          <CheckCircleFilled style={{ color: colors[`${project.color}`].colorId }} />
                         <span>{project.name}</span>
                       </Link>
 
@@ -212,7 +210,7 @@ class Dashboard extends Component {
           <Content style={{ padding: "80px 55px 84px", backgroundColor: "#fff" }}>
             <Route path='/' exact component={Today} />
             <Route path='/upcoming' exact component={Upcoming} />
-            <Route path='/project/:title' exact component={Project} />
+            <Route path='/project/:id/name/:name' exact component={Project}/>
           </Content>
         </Layout>
       </Layout>
@@ -222,3 +220,4 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => ({ projects: state.projectReducer.projects });
 export default connect(mapStateToProps, { fetchProjects, deleteProject })(Dashboard);
+

@@ -2,6 +2,7 @@ import { FETCH_PROJECTS, ADD_PROJECT, DELETE_PROJECT, EDIT_PROJECT } from "../ac
 
 import API from "../api";
 
+
 export const fetchProjects = () => dispatch => {
   API.get("projects").then(projects => dispatch({ type: FETCH_PROJECTS, payload: projects.data }));
 };
@@ -22,5 +23,6 @@ export const editProject = (projectId, name) => dispatch => {
   const data = { name };
   API.post(`projects/${projectId}`, data).then(res =>
     dispatch({ type: EDIT_PROJECT, payload: { projectId, name } })
+
   );
 };
