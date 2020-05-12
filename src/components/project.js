@@ -7,10 +7,25 @@ import { fetchSections ,onDeleteSection,insertSection} from "../actions/sectionA
 
 import Section from './section';
 
+import {
+  ProjectIcon,
+  LabelIcon,
+  PriorityIcon,
+  ReminderIcon,
+  PlusIcon,
+  EditIcon,
+  ScheduleIcon,
+  CommentIcon,
+  MenuIcon,
+} from "../svgImages";
+import { Form, Input, Button, DatePicker, Typography, Row, Col, Checkbox } from "antd";
+import "./quicktask.css";
+
 
 const { Title } = Typography;
 
 class Project extends Component {
+
   state = { 
     showform:false,
     showSection:false,
@@ -68,54 +83,123 @@ onChange = (date, dateString) => {
             className={`${this.state.showform ? "displayhide" : ""}` }>
              <PlusIcon  className="plus-icon"/>   
             <span className="plus-btn-content">Add task</span>
+
+  state = {
+    showform: false,
+    showSection: false,
+  };
+  onFinish = values => {
+    // console.log(values);
+  };
+  onChange = (date, dateString) => {
+    console.log(date, dateString);
+  };
+
+  addTask = () => {
+    this.setState({
+      showform: !this.state.showform,
+    });
+  };
+  checkbox = e => {
+    console.log(`checked = ${e.target.checked}`);
+  };
+
+  addSection = () => {
+    this.setState({
+      showSection: !this.state.showSection,
+    });
+  };
+
+  render() {
+    return (
+      <>
+        <Col md={24}>
+          <Title level={3}> {this.props.match.params.title}</Title>
+        </Col>
+        <Row>
+          <Col md={15}>
+            <Checkbox onChange={this.checkbox} style={{ marginRight: "20px" }} />
+            <span style={{ color: "#333" }}>task name</span>
+          </Col>
+
+          <Col md={4} offset={5}>
+            <Button className='btn-icon'>
+              {" "}
+              <EditIcon />
             </Button>
-            </Row> 
-            <Form
-            onFinish={this.onFinish()} className={`${!this.state.showform ? "displayhide" : ""}`}
+            <Button className='btn-icon'>
+              <ScheduleIcon />
+            </Button>
+            <Button className='btn-icon'>
+              <CommentIcon />
+            </Button>
+            <Button className='btn-icon'>
+              <MenuIcon />
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Button
+            type='link'
+            onClick={this.addTask}
+            className={`${this.state.showform ? "displayhide" : ""}`}
           >
-            <Row style={{margin:"5px"}}>
-                <Col md={20}>
-                <Input style={{lineHeight:"30px"}}/>
-                </Col>
-                <Col md={4}>
-                <DatePicker onChange={this.onChange} style={{lineHeight:"30px"}}/>
-                </Col>
-            </Row>
-      
-            <Row >
+            <PlusIcon className='plus-icon' />
+            <span className='plus-btn-content'>Add task</span>
+          </Button>
+        </Row>
+        <Form onFinish={this.onFinish()} className={`${!this.state.showform ? "displayhide" : ""}`}>
+          <Row style={{ margin: "5px" }}>
+            <Col md={20}>
+              <Input style={{ lineHeight: "30px" }} />
+            </Col>
+            <Col md={4}>
+              <DatePicker onChange={this.onChange} style={{ lineHeight: "30px" }} />
+            </Col>
+          </Row>
+
+          <Row>
             <Col md={8}>
-            <Button htmlType="submit" className="addbtn" style={{margin:"8px"}}>
+              <Button htmlType='submit' className='addbtn' style={{ margin: "8px" }}>
                 Add task
               </Button>
-            <Button className="cancelbtn" onClick={this.addTask}>
+              <Button className='cancelbtn' onClick={this.addTask}>
                 Cancel
-            </Button>
+              </Button>
             </Col>
             <Col md={4} offset={12}>
-                 <Button className="btn-icon"><ProjectIcon/></Button>
-                 <Button className="btn-icon"><LabelIcon/></Button>
-                 <Button className="btn-icon"><PriorityIcon/></Button>
-                 <Button className="btn-icon"><ReminderIcon/></Button>
-             </Col>
-             </Row>
-          </Form>
-          <div className="add-section" onClick={this.addSection}>
+              <Button className='btn-icon'>
+                <ProjectIcon />
+              </Button>
+              <Button className='btn-icon'>
+                <LabelIcon />
+              </Button>
+              <Button className='btn-icon'>
+                <PriorityIcon />
+              </Button>
+              <Button className='btn-icon'>
+                <ReminderIcon />
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+        <div className='add-section' onClick={this.addSection}>
           <hr />
-          <span className="add-section-text">Add section</span>
-          <hr/>
-          </div>
-          <Form className={`${!this.state.showSection ? "displayhide" : ""}` }>
-          <Row style={{margin:"5px"}}>
-                <Input style={{lineHeight:"30px"}}/>
-            </Row>
-            <Row >
+          <span className='add-section-text'>Add section</span>
+          <hr />
+        </div>
+        <Form className={`${!this.state.showSection ? "displayhide" : ""}`}>
+          <Row style={{ margin: "5px" }}>
+            <Input style={{ lineHeight: "30px" }} />
+          </Row>
+          <Row>
             <Col md={8}>
-            <Button htmlType="submit" className="addbtn" style={{margin:"8px"}}>
+              <Button htmlType='submit' className='addbtn' style={{ margin: "8px" }}>
                 Add task
               </Button>
-            <Button className="cancelbtn"  onClick={this.addSection}>
+              <Button className='cancelbtn' onClick={this.addSection}>
                 Cancel
-            </Button>
+              </Button>
             </Col>
             </Row>
             </Form>
@@ -130,9 +214,11 @@ onChange = (date, dateString) => {
                projectId={sectionData.project_id} />
              )
              )}
-          </>
-        );
-    }
+        </Row>
+        </Form>
+      </>
+    );
+  }
 }
 
 const mapStateToProps = (state)=> ({ 
@@ -147,3 +233,5 @@ const mapStateToProps = (state)=> ({
               };
           };
 export default connect(mapStateToProps, mapDispatchToProps)(Project);
+
+    
