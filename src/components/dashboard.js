@@ -2,16 +2,19 @@ import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import color from "../color";
+//Copmponents
+import colors from "../colors";
 import Project from "./project";
 import Today from "./today";
 import Upcoming from "./upcoming";
 import QuickAddTask from "./quickaddtask";
-import AddProject from "./addProject";
+import AddProject from "./projectPopUp";
 import { InboxIcon, TodayIcon, UpcomingIcon } from "../svgImages";
 
-import { fetchProjects } from "../actions/projectActions";
+//Actions Creatrors
+import { fetchProjects, deleteProject } from "../actions/projectActions";
 
+//Antd components
 import { Layout, Menu, Button, Dropdown } from "antd";
 import {
   MenuOutlined,
@@ -23,6 +26,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   BookTwoTone,
+  HomeOutlined,
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -32,35 +36,31 @@ class Dashboard extends Component {
   state = {
     collapsed: false,
     modalOfTask: false,
-    modalOfProject: false,
+    projectModalVisible: false,
+    projectModalData: {},
+    menuSelectedItem: "today",
   };
 
-  showPopupTask = () => {
-    this.setState({
-      modalOfTask: true,
-    });
+  showPopupTask = () => this.setState({ modalOfTask: true });
+
+  handleCancelTask = () => this.setState({ modalOfTask: false });
+
+  showPopupProject = () =>
+    this.setState({ projectModalVisible: true, projectModalData: { type: "addProject" } });
+
+  handleCancelProject = () => this.setState({ projectModalVisible: false });
+
+  onSideBarCollapse = () => this.setState({ collapsed: !this.state.collapsed });
+
+  onUpdateProject = data => {
+    const type = data.key.split("/")[0];
+    const projectId = parseInt(data.key.split("/")[1]);
+    type === "deleteProject"
+      ? this.props.deleteProject(projectId)
+      : this.setState({ projectModalVisible: true, projectModalData: { type, projectId } });
   };
 
-  showPopupProject = () => {
-    this.setState({ modalOfProject: true });
-  };
-
-  handleCancelTask = () => {
-    this.setState({ modalOfTask: false });
-  };
-
-  handleCancelProject = () => {
-    this.setState({ modalOfProject: false });
-  };
-
-  onCollapsed = () => {
-    this.setState({ collapsed: !this.state.collapsed });
-  };
-
-  onDeleteProject = e => {
-    console.log(e);
-    console.log("deleted");
-  };
+  onMenuItemSelect = key => this.setState({ menuSelectedItem: key });
 
   componentDidMount() {
     if (window.innerWidth <= 1200) this.setState({ collapsed: !this.state.collapsed });
@@ -68,22 +68,9 @@ class Dashboard extends Component {
   }
 
   render() {
-    const menu = (
-      <Menu style={{ width: 200 }}>
-        <Menu.Item key='Edit Project' onClick={this.onDeleteProject}>
-          <EditOutlined style={{ fontSize: 18 }} />
-          <span>Edit Project</span>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key='Delete Project' onClick={this.onDeleteProject}>
-          <DeleteOutlined style={{ fontSize: 18 }} />
-          <span>Delete Project</span>
-        </Menu.Item>
-      </Menu>
-    );
-
     return (
-      <Layout style={{ minHeight: "100vh" }}>
+      <Layout style={{ maxHeight: "100vh" }}>
+        {/* Menu Bar */}
         <Menu style={{ backgroundColor: "#db4c3f" }}>
           <div
             style={{
@@ -95,15 +82,17 @@ class Dashboard extends Component {
           >
             <div style={{ marginLeft: 40 }}>
               <MenuOutlined
-                className='menu-icon'
                 style={{ color: "#fff", fontSize: 25 }}
-                onClick={this.onCollapsed}
+                onClick={this.onSideBarCollapse}
               />
+              <Link to='/' onClick={() => this.onMenuItemSelect("today")}>
+                <HomeOutlined style={{ color: "#fff", fontSize: 25, marginLeft: 15 }} />
+              </Link>
             </div>
             <div style={{ display: "flex", marginRight: 40 }}>
               <PlusOutlined
                 className='menu-icon'
-                style={{ color: "#fff", fontSize: 25, margin: "auto 10px" }}
+                style={{ color: "#fff", fontSize: 25, marginRight: 15 }}
                 onClick={this.showPopupTask}
               />
               {this.state.modalOfTask ? (
@@ -112,12 +101,12 @@ class Dashboard extends Component {
                   handleCancelTask={this.handleCancelTask}
                 />
               ) : null}
-
-              <SettingTwoTone twoToneColor='#fff' style={{ margin: "auto 10px", fontSize: 25 }} />
+              <SettingTwoTone twoToneColor='#fff' style={{ fontSize: 25 }} />
             </div>
           </div>
         </Menu>
 
+        {/* Side Bar */}
         <Layout>
           <Sider
             style={{ backgroundColor: "#fafafa" }}
@@ -128,63 +117,88 @@ class Dashboard extends Component {
           >
             <Menu
               mode='inline'
-              defaultSelectedKeys={["/"]}
-              defaultOpenKeys={["Projects"]}
+              defaultSelectedKeys={["today"]}
+              defaultOpenKeys={["projects"]}
+              selectedKeys={[this.state.menuSelectedItem]}
               style={{ backgroundColor: "#fafafa" }}
             >
-              <Menu.Item key='/inbox'>
-                <Link to='/project/inbox'>
+              <Menu.Item key='inbox'>
+                <Link to='/project/inbox' onClick={() => this.onMenuItemSelect("inbox")}>
                   <InboxIcon style={{ color: "#4073ff" }} />
                   <span>Inbox</span>
                 </Link>
               </Menu.Item>
-              <Menu.Item key='/'>
-                <Link to='/'>
+              <Menu.Item key='today'>
+                <Link to='/' onClick={() => this.onMenuItemSelect("today")}>
                   <TodayIcon style={{ color: "#299438" }} />
                   <span>Today</span>
                 </Link>
               </Menu.Item>
-              <Menu.Item key='/upcoming'>
-                <Link to='/upcoming'>
+              <Menu.Item key='upcoming'>
+                <Link to='/upcoming' onClick={() => this.onMenuItemSelect("upcoming")}>
                   <UpcomingIcon style={{ color: "#af38eb" }} />
                   <span>Upcoming</span>
                 </Link>
               </Menu.Item>
-              <SubMenu key='Projects' icon={<ProjectTwoTone />} title='Projects'>
+
+              {/* Projects SubMenu */}
+              <SubMenu key='projects' icon={<ProjectTwoTone />} title='Projects'>
                 {this.props.projects
                   .filter(project => project.name !== "Inbox")
                   .map(project => (
-                    <Menu.Item key={project.id} className='project-menu-item'>
-                      <Link to={`/project/${project.name}`}>
-                        <CheckCircleFilled style={{ color: color[`${project.color}`] }} />
+                    <Menu.Item key={`${project.id}`} className='project-menu-item'>
+                      <Link
+                        to={`/project/${project.name}`}
+                        onClick={() => this.onMenuItemSelect(`${project.id}`)}
+                      >
+                        <CheckCircleFilled style={{ color: colors[`${project.color}`].colorId }} />
                         <span>{project.name}</span>
-                        <Dropdown overlay={menu} placement='bottomLeft' trigger={["click"]}>
-                          <Button
-                            ghost
-                            size='small'
-                            className='project-update-btn'
-                            style={{ borderStyle: "none", float: "right" }}
-                            onClick={e => e.stopPropagation()}
-                          >
-                            <EllipsisOutlined
-                              style={{ fontSize: 25, color: "#808080" }}
-                              // onClick={e => e.stopPropagation()}
-                            />
-                          </Button>
-                        </Dropdown>
                       </Link>
+
+                      {/* Project Update Dropdown */}
+                      <Dropdown
+                        overlay={
+                          <Menu style={{ width: 200 }} onClick={this.onUpdateProject}>
+                            <Menu.Item key={`editProject/${project.id}`}>
+                              <EditOutlined style={{ fontSize: 18 }} />
+                              <span>Edit Project</span>
+                            </Menu.Item>
+                            <Menu.Divider />
+                            <Menu.Item key={`deleteProject/${project.id}`}>
+                              <DeleteOutlined style={{ fontSize: 18 }} />
+                              <span>Delete Project</span>
+                            </Menu.Item>
+                          </Menu>
+                        }
+                        placement='bottomLeft'
+                        trigger={["click"]}
+                      >
+                        <Button
+                          ghost
+                          size='small'
+                          className='project-update-btn'
+                          style={{ borderStyle: "none", float: "right" }}
+                          onClick={e => e.stopPropagation()}
+                        >
+                          <EllipsisOutlined style={{ fontSize: 25, color: "#808080" }} />
+                        </Button>
+                      </Dropdown>
                     </Menu.Item>
                   ))}
+                {/* Add project button */}
                 <Button block onClick={this.showPopupProject}>
                   <PlusOutlined />
                   <span>Add Project</span>
                 </Button>
-                {this.state.modalOfProject ? (
+                {this.state.projectModalVisible ? (
                   <AddProject
-                    modalOfProject={this.state.modalOfProject}
+                    projectModalVisible={this.state.projectModalVisible}
                     handleCancelProject={this.handleCancelProject}
+                    projectModalData={this.state.projectModalData}
                   />
                 ) : null}
+
+                {/* Filters SubMenu */}
               </SubMenu>
               <SubMenu key='Filters' title='Filters' icon={<BookTwoTone />}>
                 <Menu.Item key='Filter-1'>filter-1</Menu.Item>
@@ -193,6 +207,8 @@ class Dashboard extends Component {
               </SubMenu>
             </Menu>
           </Sider>
+
+          {/* Content */}
           <Content style={{ padding: "80px 55px 84px", backgroundColor: "#fff" }}>
             <Route path='/' exact component={Today} />
             <Route path='/upcoming' exact component={Upcoming} />
@@ -205,4 +221,4 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({ projects: state.projectReducer.projects });
-export default connect(mapStateToProps, { fetchProjects })(Dashboard);
+export default connect(mapStateToProps, { fetchProjects, deleteProject })(Dashboard);

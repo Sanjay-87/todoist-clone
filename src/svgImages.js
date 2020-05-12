@@ -18,6 +18,7 @@ const inboxSVG = () => (
   </svg>
 );
 
+const d = new Date();
 const todaySvg = () => (
   <svg width='24' height='24' viewBox='0 0 24 24'>
     <g fill='currentColor' fill-rule='evenodd'>
@@ -37,13 +38,12 @@ const todaySvg = () => (
         font-weight='500'
       >
         <tspan x='8' y='15' text-anchor='middle'>
-          08
+          {d.getDate()}
         </tspan>
       </text>
     </g>
   </svg>
 );
-export const TodayIcon = props => <Icon component={todaySvg} {...props} />;
 
 const upcomingSvg = () => (
   <svg width='24' height='24' viewBox='0 0 24 24'>
@@ -91,7 +91,7 @@ const PlusSvg = () => (
 );
 
 const EditSvg = () => (
-  <svg width='24' height='24' data-svgs-path='sm1/edit.svg' class='form_action_icon'>
+  <svg width='24' height='24' data-svgs-path='sm1/edit.svg'>
     <g fill='none' fill-rule='evenodd'>
       <path fill='currentColor' d='M9.5 19h10a.5.5 0 1 1 0 1h-10a.5.5 0 1 1 0-1z'></path>
       <path
@@ -113,13 +113,7 @@ const ScheduleSvg = () => (
 );
 
 const CommentSvg = () => (
-  <svg
-    width='24'
-    height='24'
-    viewBox='0 0 24 24'
-    data-svgs-path='sm1/comments.svg'
-    class='form_action_icon'
-  >
+  <svg width='24' height='24' viewBox='0 0 24 24' data-svgs-path='sm1/comments.svg'>
     <path
       fill='currentColor'
       fill-rule='nonzero'
@@ -127,6 +121,7 @@ const CommentSvg = () => (
     ></path>
   </svg>
 );
+
 const MenuSvg = () => (
   <svg width='15' height='3' data-svgs-path='sm1/more_small.svg'>
     <path
@@ -137,6 +132,7 @@ const MenuSvg = () => (
   </svg>
 );
 
+const TodayIcon = props => <Icon component={todaySvg} {...props} />;
 const InboxIcon = props => <Icon component={inboxSVG} {...props} />;
 const UpcomingIcon = props => <Icon component={upcomingSvg} {...props} />;
 const ProjectIcon = props => <Icon component={ProjectSvg} {...props} />;
@@ -151,6 +147,7 @@ const MenuIcon = props => <Icon component={MenuSvg} {...props} />;
 
 export {
   UpcomingIcon,
+  TodayIcon,
   InboxIcon,
   ProjectIcon,
   LabelIcon,
