@@ -155,7 +155,7 @@ class Dashboard extends Component {
                   .filter(project => project.name !== "Inbox")
                   .map(project => (
                     <Menu.Item key={project.id} className='project-menu-item'>
-                      <Link to={`/project/${project.name}`}>
+                      <Link to={`/project/${project.id}/name/${project.name}`}>
                         <CheckCircleFilled style={{ color: color[`${project.color}`] }} />
                         <span>{project.name}</span>
                         <Dropdown overlay={menu} placement='bottomLeft' trigger={["click"]}>
@@ -196,7 +196,7 @@ class Dashboard extends Component {
           <Content style={{ padding: "80px 55px 84px", backgroundColor: "#fff" }}>
             <Route path='/' exact component={Today} />
             <Route path='/upcoming' exact component={Upcoming} />
-            <Route path='/project/:title' exact component={Project} />
+            <Route path='/project/:id/name/:name' exact component={Project}/>
           </Content>
         </Layout>
       </Layout>
@@ -205,4 +205,4 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({ projects: state.projectReducer.projects });
-export default connect(mapStateToProps, { fetchProjects })(Dashboard);
+export default connect(mapStateToProps, { fetchProjects })(Dashboard); 

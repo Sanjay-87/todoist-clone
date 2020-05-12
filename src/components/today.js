@@ -26,8 +26,6 @@ class Today extends Component {
         console.log(`checked = ${e.target.checked}`)
       }
       
-     
-
     render() {  
         return (
             <>

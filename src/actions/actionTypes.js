@@ -1,2 +1,6 @@
 //Projects
 export const FETCH_PROJECTS = "FETCH_PROJECTS";
+//Sections
+export const FETCH_SECTIONS = "FETCH_SECTIONS";
+export const DELETE_SECTIONS = "DELETE_SECTIONS";
+export const INSERT_SECTIONS = "INSERT_SECTIONS";

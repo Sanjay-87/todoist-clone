@@ -91,7 +91,7 @@ const PlusSvg = () => (
 );
 
 const EditSvg = () => (
-  <svg width='24' height='24' data-svgs-path='sm1/edit.svg' class='form_action_icon'>
+  <svg width='24' height='24' data-svgs-path='sm1/edit.svg' className='form_action_icon'>
     <g fill='none' fill-rule='evenodd'>
       <path fill='currentColor' d='M9.5 19h10a.5.5 0 1 1 0 1h-10a.5.5 0 1 1 0-1z'></path>
       <path
@@ -118,7 +118,7 @@ const CommentSvg = () => (
     height='24'
     viewBox='0 0 24 24'
     data-svgs-path='sm1/comments.svg'
-    class='form_action_icon'
+    className='form_action_icon'
   >
     <path
       fill='currentColor'

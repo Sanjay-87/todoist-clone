@@ -1,45 +1,54 @@
 import React, { Component } from "react";
 import {ProjectIcon,LabelIcon,PriorityIcon,ReminderIcon ,PlusIcon,EditIcon,ScheduleIcon,CommentIcon,
   MenuIcon} from "../svgImages";
-import { Form, Input, Button,DatePicker,Typography,Row,Col,Checkbox} from 'antd';
-import "./quicktask.css";
+  import { Form, Input, Button,DatePicker,Typography,Row,Col,Checkbox} from 'antd';
+import { connect } from "react-redux";
+import { fetchSections ,onDeleteSection,insertSection} from "../actions/sectionActions";
+
+import Section from './section';
+
 
 const { Title } = Typography;
 
 class Project extends Component {
-    state = {
-        showform:false,
-        showSection:false,
-    };
-    onFinish =(values)=>{
-        console.log(values);
+  state = { 
+    showform:false,
+    showSection:false,
+};
+
+onFinish =(values)=>{
+    // console.log(values);
+}
+onChange = (date, dateString) => {
+    console.log(date, dateString);
+  };
+
+  addTask=()=>{
+    this.setState({
+         showform:!this.state.showform,
+    })
+  }
+  checkbox=(e) =>{
+    console.log(`checked = ${e.target.checked}`)
+  }
+  addSection=()=>{
+    this.setState({
+        showSection:!this.state.showSection,
+   })
+  }
+    componentDidMount() {
+      this.props.fetchSection();
     }
-    onChange = (date, dateString) => {
-        console.log(date, dateString);
-      };
-
-      addTask=()=>{
-        this.setState({
-             showform:!this.state.showform,
-        })
-      }
-      checkbox=(e) =>{
-        console.log(`checked = ${e.target.checked}`)
-      }
-
-      addSection=()=>{
-        this.setState({
-            showSection:!this.state.showSection,
-       })
-      }
      
-
     render() {  
+
         return (
             <>
+           {console.log(this.props.listofsection)}
             <Col md={24}>
-              <Title level={3}> {this.props.match.params.title}</Title>
+              <Title level={3}> {this.props.match.params.name}</Title>
               </Col>
+             
               <Row>
                 <Col  md={15} >
                 <Checkbox onChange={this.checkbox} style={{marginRight:"20px"}}/>
@@ -110,10 +119,31 @@ class Project extends Component {
             </Col>
             </Row>
             </Form>
+
+           {
+           this.props.listofsection
+                .filter(sectionData => `${sectionData.project_id}` === (this.props.match.params.id))
+                .map((sectionData) => (
+              <Section  sectionDetail={sectionData}
+               deleteSection={()=>this.props.onDeleteSection(sectionData.id)}
+               insertNewSection={this.props.insertSection}
+               projectId={sectionData.project_id} />
+             )
+             )}
           </>
         );
     }
 }
 
-export default Project;
+const mapStateToProps = (state)=> ({ 
+             listofsection: state.sectionReducer.section,
 
+            });
+            const mapDispatchToProps =(dispatch)=>{
+              return {
+                  fetchSection: ()=> dispatch(fetchSections()),
+                  onDeleteSection: (id)=> dispatch(onDeleteSection(id)),
+                  insertSection: (projectId,name)=>dispatch(insertSection(projectId,name))
+              };
+          };
+export default connect(mapStateToProps, mapDispatchToProps)(Project);
