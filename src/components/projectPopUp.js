@@ -123,4 +123,3 @@ class AddProject extends Component {
 
 const mapStateToProps = state => ({ projects: state.projectReducer.projects });
 export default connect(mapStateToProps, { addProject, editProject })(AddProject);
-  
