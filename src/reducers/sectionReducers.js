@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
         case DELETE_SECTIONS: {
             // console.log(action.payload)
            return { ...state,
-             section:[...state.section.filter(section =>  section.id != action.payload)] }
+             section:[...state.section.filter(section =>  section.id !== action.payload)] }
         }
 
         case INSERT_SECTIONS: {
@@ -28,3 +28,4 @@ export default (state = initialState, action) => {
             return state;
     }
 };
+
