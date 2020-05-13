@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchSections ,onDeleteSection,insertSection} from "../actions/sectionActions";
+import { fetchSections ,onDeleteSection,insertSection,updateSection} from "../actions/sectionActions";
 
 import Section from './section';
 
@@ -79,7 +79,7 @@ class Project extends Component {
     return (
       <>
         <Col md={24}>
-          <Title level={3}> {this.props.match.params.title}</Title>
+          <Title level={3}> {this.props.match.params.name}</Title>
         </Col>
         <Row>
           <Col md={15}>
@@ -124,7 +124,8 @@ class Project extends Component {
 
           <Row>
             <Col md={8}>
-              <Button htmlType='submit' className='addbtn' style={{ margin: "8px" }}>
+              <Button htmlType='submit' className='addbtn' 
+              style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}>
                 Add task
               </Button>
               <Button className='cancelbtn' onClick={this.addTask}>
@@ -160,7 +161,9 @@ class Project extends Component {
           </Row>
           <Row>
             <Col md={8}>
-              <Button htmlType='submit' className='addbtn' style={{ margin: "8px" }}
+              <Button htmlType='submit' className='addbtn'
+              disabled={this.state.input === ""}
+               style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
               onClick={this.insertFirstSection}>
                 Add Section
               </Button>
@@ -178,7 +181,8 @@ class Project extends Component {
               <Section  sectionDetail={sectionData}
                deleteSection={()=>this.props.onDeleteSection(sectionData.id)}
                insertNewSection={this.props.insertSection}
-               projectId={sectionData.project_id} />
+               projectId={sectionData.project_id}
+               insertUpdatedSection={this.props.updateSection} />
              )
              )}
       </>
@@ -194,7 +198,8 @@ const mapStateToProps = (state)=> ({
               return {
                   fetchSection: ()=> dispatch(fetchSections()),
                   onDeleteSection: (id)=> dispatch(onDeleteSection(id)),
-                  insertSection: (projectId,name)=>dispatch(insertSection(projectId,name))
+                  insertSection: (projectId,name)=>dispatch(insertSection(projectId,name)),
+                  updateSection: (sectionId,updatedName)=>dispatch(updateSection(sectionId,updatedName)),
               };
           };
 export default connect(mapStateToProps, mapDispatchToProps)(Project);
