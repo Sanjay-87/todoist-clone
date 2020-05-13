@@ -79,7 +79,7 @@ class Project extends Component {
     return (
       <>
         <Col md={24}>
-          <Title level={3}> {this.props.match.params.title}</Title>
+          <Title level={3}> {this.props.match.params.name}</Title>
         </Col>
         <Row>
           <Col md={15}>
