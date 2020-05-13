@@ -12,6 +12,7 @@ import { InboxIcon, TodayIcon, UpcomingIcon } from "../svgImages";
 
 //Actions Creatrors
 import { fetchProjects, deleteProject } from "../actions/projectActions";
+import { fetchTasks } from "../actions/taskActions";
 
 //Antd components
 import { Layout, Menu, Button, Dropdown } from "antd";
@@ -33,6 +34,7 @@ const { Sider, Content } = Layout;
 
 class Dashboard extends Component {
   state = {
+    inboxId: "",
     collapsed: false,
     modalOfTask: false,
     projectModalVisible: false,
@@ -61,14 +63,21 @@ class Dashboard extends Component {
 
   onMenuItemSelect = key => this.setState({ menuSelectedItem: key });
 
+  componentDidUpdate(prevState, prevProps) {
+    if (prevProps.inboxId === "") {
+      this.setState({ inboxId: this.props.projects[0].id });
+    }
+  }
+
   componentDidMount() {
-    if (window.innerWidth <= 1200) this.setState({ collapsed: !this.state.collapsed });
+    // if (window.innerWidth <= 1200) this.setState({ collapsed: !this.state.collapsed });
     this.props.fetchProjects();
+    this.props.fetchTasks();
   }
 
   render() {
     return (
-      <Layout style={{ maxHeight: "100vh" }}>
+      <Layout style={{ maxHeight: "100vh", color: "black" }}>
         {/* Menu Bar */}
         <Menu style={{ backgroundColor: "#db4c3f" }}>
           <div
@@ -112,7 +121,7 @@ class Dashboard extends Component {
             trigger={null}
             collapsed={this.state.collapsed}
             width={300}
-            collapsedWidth={window.innerWidth <= 992 ? 0 : 80}
+            collapsedWidth={0}
           >
             <Menu
               mode='inline'
@@ -122,7 +131,10 @@ class Dashboard extends Component {
               style={{ backgroundColor: "#fafafa" }}
             >
               <Menu.Item key='inbox'>
-                <Link to='/project/inbox' onClick={() => this.onMenuItemSelect("inbox")}>
+                <Link
+                  to={`/project/${this.state.inboxId}/name/Inbox`}
+                  onClick={() => this.onMenuItemSelect("inbox")}
+                >
                   <InboxIcon style={{ color: "#4073ff" }} />
                   <span>Inbox</span>
                 </Link>
@@ -146,10 +158,11 @@ class Dashboard extends Component {
                   .filter(project => project.name !== "Inbox")
                   .map(project => (
                     <Menu.Item key={project.id} className='project-menu-item'>
-                      <Link to={`/project/${project.id}/name/${project.name}`}
-                       onClick={() => this.onMenuItemSelect(`${project.id}`)}>
-                      
-                          <CheckCircleFilled style={{ color: colors[`${project.color}`].colorId }} />
+                      <Link
+                        to={`/project/${project.id}/name/${project.name}`}
+                        onClick={() => this.onMenuItemSelect(`${project.id}`)}
+                      >
+                        <CheckCircleFilled style={{ color: colors[`${project.color}`].colorId }} />
                         <span>{project.name}</span>
                       </Link>
 
@@ -207,10 +220,10 @@ class Dashboard extends Component {
           </Sider>
 
           {/* Content */}
-          <Content style={{ padding: "80px 55px 84px", backgroundColor: "#fff" }}>
+          <Content style={{ padding: "15px 10%", backgroundColor: "#fff" }}>
             <Route path='/' exact component={Today} />
             <Route path='/upcoming' exact component={Upcoming} />
-            <Route path='/project/:id/name/:name' exact component={Project}/>
+            <Route path='/project/:id/name/:name' exact component={Project} />
           </Content>
         </Layout>
       </Layout>
@@ -219,4 +232,4 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({ projects: state.projectReducer.projects });
-export default connect(mapStateToProps, { fetchProjects, deleteProject })(Dashboard);
+export default connect(mapStateToProps, { fetchProjects, deleteProject, fetchTasks })(Dashboard);

@@ -6,18 +6,20 @@ import { UPDATE_SECTIONS } from "../actions/actionTypes";
 const initialState = { section: [] };
 
 export default (state = initialState, action) => {
-    console.log(action)
-    switch (action.type) {
-        case FETCH_SECTIONS: {
-            return { ...state, section: action.payload };
-            
-        }
+  // console.log(action);
+  switch (action.type) {
+    case FETCH_SECTIONS: {
+      return { ...state, section: action.payload };
+    }
 
-        case DELETE_SECTIONS: {
-            // console.log(action.payload)
-           return { ...state,
-             section:[...state.section.filter(section =>  section.id !== action.payload)] }
-        }
+
+    case DELETE_SECTIONS: {
+      // console.log(action.payload)
+      return {
+        ...state,
+        section: [...state.section.filter(section => section.id !== action.payload)],
+      };
+    }
 
         case INSERT_SECTIONS: {
             console.log(state)
@@ -43,7 +45,9 @@ export default (state = initialState, action) => {
 
         }
 
-        default:
-            return state;
-    }
+
+    default:
+      return state;
+  }
+
 };
