@@ -30,7 +30,9 @@ class Section extends Component {
   state = {
     showform: false,
     showSection: false,
-    input:""
+    input:"",
+    showName: false,
+    newInput:"",
   };
 
   onFinish = (values) => {
@@ -59,6 +61,14 @@ class Section extends Component {
           input: e.target.value,
       });
   };
+  
+  updateNewInput = (e)=>{
+      // console.log(e.target.value)
+      // console.log("jhsd");
+      this.setState({
+        newInput: e.target.value,
+      });
+  };
 
   insertSection =()=>{
    
@@ -73,6 +83,23 @@ class Section extends Component {
         showSection: !this.state.showSection,
       });
 
+  }
+  updateSection =()=>{
+   
+    let editSectionName = this.state.newInput;
+  console.log(editSectionName);
+  this.props.insertUpdatedSection(this.props.sectionDetail.id,editSectionName);
+
+  this.setState({
+    showName: !this.state.showName,
+  });
+
+}
+
+  onEditSection=()=>{
+   this.setState({
+    showName:!this.state.showName,
+   }) 
   }
 
   render() {
@@ -93,9 +120,10 @@ class Section extends Component {
 
     return (
       <>
-      <Row>
-          <Col md={23}>
-          <Title level={4}>{this.props.sectionDetail.name}</Title>
+      <Row className={`${this.state.showName?"displayhide": ""}`}>
+          <Col md={23} >
+          <Title level={4} >
+            {this.props.sectionDetail.name}</Title>
           </Col>
           <Col md={1}>
           <Dropdown overlay={menu} trigger={["click"]}>
@@ -113,6 +141,29 @@ class Section extends Component {
         </Dropdown>
           </Col>
       </Row>
+      <Form className={`${!this.state.showName ? "displayhide" : ""}`}
+        >
+          <Row style={{ margin: "5px" }}>
+            <Input style={{ lineHeight: "30px" }} 
+             value={this.state.newInput}
+              onChange={this.updateNewInput} />
+          </Row>
+          <Row>
+            <Col md={8}>
+              <Button
+                htmlType="submit"
+                style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
+                disabled={this.state.newInput === ""}
+                onClick={this.updateSection}
+              >
+                Save
+              </Button>
+              <Button className="cancelbtn" onClick={this.onEditSection}>
+                Cancel
+              </Button>
+            </Col>
+          </Row>
+        </Form>
 
         <Row>
           <Button
@@ -127,7 +178,7 @@ class Section extends Component {
         <Form
           onFinish={this.onFinish()}
           className={`${!this.state.showform ? "displayhide" : ""}`}
-        >
+        > 
           <Row style={{ margin: "5px" }}>
             <Col md={20}>
               <Input style={{ lineHeight: "30px" }} />
@@ -144,8 +195,7 @@ class Section extends Component {
             <Col md={8}>
               <Button
                 htmlType="submit"
-                className="addbtn"
-                style={{ margin: "8px" }}
+                style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
               >
                 Add task
               </Button>
@@ -186,9 +236,9 @@ class Section extends Component {
             <Col md={8}>
               <Button
                 htmlType="submit"
-                className="addbtn"
                 onClick={this.insertSection}
-                style={{ margin: "8px" }}
+                disabled={this.state.input === ""}
+                style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
               >
                 Add Section
               </Button>

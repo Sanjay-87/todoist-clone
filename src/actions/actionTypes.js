@@ -8,6 +8,7 @@ export const EDIT_PROJECT = "EDIT_PROJECT";
 export const FETCH_SECTIONS = "FETCH_SECTIONS";
 export const DELETE_SECTIONS = "DELETE_SECTIONS";
 export const INSERT_SECTIONS = "INSERT_SECTIONS";
+export const UPDATE_SECTIONS = "UPDATE_SECTIONS";
 
 //Tasks
 export const FECTH_TASKS = "FECTH_TASKS";

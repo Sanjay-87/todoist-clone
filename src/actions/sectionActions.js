@@ -1,6 +1,7 @@
 import { FETCH_SECTIONS } from "../actions/actionTypes";
 import { DELETE_SECTIONS } from "../actions/actionTypes";
 import { INSERT_SECTIONS } from "../actions/actionTypes";
+import { UPDATE_SECTIONS } from "../actions/actionTypes";
 
 import API from "../api";
 
@@ -14,9 +15,20 @@ export const onDeleteSection = id => dispatch => {
   });
 };
 
-export const insertSection = (projectId, name) => dispatch => {
-  API.post(`sections?project_id=${projectId}&name=${name}`).then(section => {
-    console.log(section.data);
-    dispatch({ type: INSERT_SECTIONS, payload: section.data });
-  });
+export const insertSection = (projectId,name) => (dispatch) => {
+  API.post(`sections?project_id=${projectId}&name=${name}`).then((section) =>{
+    console.log(section.data)
+    dispatch({ type: INSERT_SECTIONS, payload: section.data })
+  }   
+  );
 };
+
+export const updateSection = (sectionId,name) => (dispatch) => {
+  let data={name}
+  API.post(`sections/${sectionId}`,data).then((section) =>{
+    console.log(section)
+    dispatch({ type: UPDATE_SECTIONS, payload: {sectionId,name} })
+  }   
+  );
+};
+
