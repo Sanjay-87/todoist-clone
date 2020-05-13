@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import {ProjectIcon,LabelIcon,PriorityIcon,ReminderIcon ,PlusIcon,EditIcon,ScheduleIcon,CommentIcon,
-  MenuIcon} from "../svgImages";
-  import { Form, Input, Button,DatePicker,Typography,Row,Col,Checkbox} from 'antd';
 import { connect } from "react-redux";
 import { fetchSections ,onDeleteSection,insertSection} from "../actions/sectionActions";
 
@@ -27,14 +24,15 @@ const { Title } = Typography;
 class Project extends Component {
 
   state = { 
+    input:"",
     showform:false,
     showSection:false,
-};
+  };
 
-onFinish =(values)=>{
+ onFinish =(values)=>{
     // console.log(values);
-}
-onChange = (date, dateString) => {
+ }
+ onChange = (date, dateString) => {
     console.log(date, dateString);
   };
 
@@ -54,62 +52,29 @@ onChange = (date, dateString) => {
     componentDidMount() {
       this.props.fetchSection();
     }
+    updateInput = (e)=>{
+      //   console.log(e.target.value)
+      //   console.log("jhsd");
+        this.setState({
+            input: e.target.value,
+        });
+    };
+
+  insertFirstSection =()=>{
+   
+    let sectionName = this.state.input;
+    this.setState({
+      input:''
+    });
+  // console.log(sectionName);
+  this.props.insertSection(this.props.match.params.id,sectionName);
+
+  this.setState({
+    showSection: !this.state.showSection,
+  });
+
+}
      
-    render() {  
-
-        return (
-            <>
-           {console.log(this.props.listofsection)}
-            <Col md={24}>
-              <Title level={3}> {this.props.match.params.name}</Title>
-              </Col>
-             
-              <Row>
-                <Col  md={15} >
-                <Checkbox onChange={this.checkbox} style={{marginRight:"20px"}}/>
-                <span style={{color:"#333"}}>task name</span>
-                
-                </Col>
-                
-                <Col md={4} offset={5}>
-                   <Button className="btn-icon"> <EditIcon/></Button>
-                  <Button className="btn-icon"><ScheduleIcon/></Button>
-                  <Button className="btn-icon"><CommentIcon/></Button>
-                  <Button className="btn-icon"><MenuIcon/></Button>       
-                </Col>
-              </Row>
-            <Row>
-            <Button  type="link" onClick={this.addTask} 
-            className={`${this.state.showform ? "displayhide" : ""}` }>
-             <PlusIcon  className="plus-icon"/>   
-            <span className="plus-btn-content">Add task</span>
-
-  state = {
-    showform: false,
-    showSection: false,
-  };
-  onFinish = values => {
-    // console.log(values);
-  };
-  onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
-
-  addTask = () => {
-    this.setState({
-      showform: !this.state.showform,
-    });
-  };
-  checkbox = e => {
-    console.log(`checked = ${e.target.checked}`);
-  };
-
-  addSection = () => {
-    this.setState({
-      showSection: !this.state.showSection,
-    });
-  };
-
   render() {
     return (
       <>
@@ -124,7 +89,6 @@ onChange = (date, dateString) => {
 
           <Col md={4} offset={5}>
             <Button className='btn-icon'>
-              {" "}
               <EditIcon />
             </Button>
             <Button className='btn-icon'>
@@ -190,12 +154,15 @@ onChange = (date, dateString) => {
         </div>
         <Form className={`${!this.state.showSection ? "displayhide" : ""}`}>
           <Row style={{ margin: "5px" }}>
-            <Input style={{ lineHeight: "30px" }} />
+            <Input style={{ lineHeight: "30px" }} 
+            value={this.state.input}
+            onChange={this.updateInput}/>
           </Row>
           <Row>
             <Col md={8}>
-              <Button htmlType='submit' className='addbtn' style={{ margin: "8px" }}>
-                Add task
+              <Button htmlType='submit' className='addbtn' style={{ margin: "8px" }}
+              onClick={this.insertFirstSection}>
+                Add Section
               </Button>
               <Button className='cancelbtn' onClick={this.addSection}>
                 Cancel
@@ -214,8 +181,6 @@ onChange = (date, dateString) => {
                projectId={sectionData.project_id} />
              )
              )}
-        </Row>
-        </Form>
       </>
     );
   }

@@ -63,7 +63,9 @@ class Section extends Component {
   insertSection =()=>{
    
         let sectionName = this.state.input;
-
+        this.setState({
+          input:''
+        });
       console.log(sectionName);
       this.props.insertNewSection(this.props.projectId,sectionName);
 
@@ -77,14 +79,14 @@ class Section extends Component {
       
     const menu = (
       <Menu style={{ width: 200 }}>
-        <Menu.Item key="Edit Project" onClick={this.onEditSection}>
+        <Menu.Item key="Edit Section" onClick={this.onEditSection}>
           <EditOutlined style={{ fontSize: 18 }} />
-          <span>Edit Project</span>
+          <span>Edit Section</span>
         </Menu.Item>
         <Menu.Divider />
-        <Menu.Item key="Delete Project" onClick={this.props.deleteSection}>
+        <Menu.Item key="Delete Section" onClick={this.props.deleteSection}>
           <DeleteOutlined style={{ fontSize: 18 }} />
-          <span>Delete Project</span>
+          <span>Delete Section</span>
         </Menu.Item>
       </Menu>
     );

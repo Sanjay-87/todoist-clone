@@ -220,4 +220,3 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => ({ projects: state.projectReducer.projects });
 export default connect(mapStateToProps, { fetchProjects, deleteProject })(Dashboard);
-
