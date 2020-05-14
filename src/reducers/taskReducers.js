@@ -1,4 +1,4 @@
-import { FECTH_TASKS } from "../actions/actionTypes";
+import { FECTH_TASKS, ADD_TASK } from "../actions/actionTypes";
 
 const initialState = { tasks: {} };
 
@@ -12,6 +12,14 @@ export default (state = initialState, action) => {
       });
       return { ...state, tasks };
     }
+    case ADD_TASK: {
+      const task = action.payload;
+      return {
+        ...state,
+        tasks: { ...state.tasks, [task.project_id]: [...state.tasks[task.project_id], task] },
+      };
+    }
+
     default:
       return state;
   }

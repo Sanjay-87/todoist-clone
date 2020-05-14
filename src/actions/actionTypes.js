@@ -12,3 +12,4 @@ export const UPDATE_SECTIONS = "UPDATE_SECTIONS";
 
 //Tasks
 export const FECTH_TASKS = "FECTH_TASKS";
+export const ADD_TASK = "ADD_TASK";

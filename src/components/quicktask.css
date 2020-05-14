@@ -36,19 +36,16 @@
 .plus-btn-content {
   color: gray;
 }
-.add-section{
-    display:flex;
-    padding-top:25px;
-    color: #db4c3f;
-    cursor: pointer;
+.add-section {
+  display: flex;
+  padding-top: 25px;
+  color: #db4c3f;
+  cursor: pointer;
 }
-.add-section-text{
-    width: 20%;
-    text-align: center;
+.add-section-text {
+  width: 20%;
+  text-align: center;
 }
-hr{
-    width: 100%;
+hr {
+  width: 100%;
 }
-
-
-

@@ -63,16 +63,16 @@ class Dashboard extends Component {
 
   onMenuItemSelect = key => this.setState({ menuSelectedItem: key });
 
-  componentDidUpdate(prevState, prevProps) {
-    if (prevProps.inboxId === "") {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.inboxId === "" && this.props.projects[0] !== undefined) {
       this.setState({ inboxId: this.props.projects[0].id });
+      this.props.fetchTasks();
     }
   }
 
   componentDidMount() {
-    // if (window.innerWidth <= 1200) this.setState({ collapsed: !this.state.collapsed });
+    if (window.innerWidth <= 1200) this.setState({ collapsed: !this.state.collapsed });
     this.props.fetchProjects();
-    this.props.fetchTasks();
   }
 
   render() {
@@ -120,8 +120,8 @@ class Dashboard extends Component {
             style={{ backgroundColor: "#fafafa" }}
             trigger={null}
             collapsed={this.state.collapsed}
+            collapsedWidth={window.innerWidth >= 992 ? 80 : 0}
             width={300}
-            collapsedWidth={0}
           >
             <Menu
               mode='inline'
@@ -220,7 +220,7 @@ class Dashboard extends Component {
           </Sider>
 
           {/* Content */}
-          <Content style={{ padding: "15px 10%", backgroundColor: "#fff" }}>
+          <Content style={{ padding: "25px 50px", backgroundColor: "#fff" }}>
             <Route path='/' exact component={Today} />
             <Route path='/upcoming' exact component={Upcoming} />
             <Route path='/project/:id/name/:name' exact component={Project} />
