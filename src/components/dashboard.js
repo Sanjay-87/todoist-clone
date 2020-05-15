@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+//Components
 import colors from "../colors";
 import Project from "./project";
 import Today from "./today";
