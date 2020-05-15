@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import { Typography, Divider } from "antd";
+
+import colors from "../colors";
+import Task from "./task";
+
 //Antd Components
 import { Typography, Divider } from "antd";
 
@@ -36,6 +41,7 @@ class Today extends Component {
         <Title level={4} style={{ fontSize: 15 }}>{`Today: ${todaysDate.toDateString()}`}</Title>
         <Divider style={{ margin: 0 }} />
         <div>
+
           {todayTasks.map(task => (
             <Task type='today' taskData={task} />
           ))}

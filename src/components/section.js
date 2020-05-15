@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { ProjectIcon, LabelIcon, PriorityIcon, ReminderIcon, PlusIcon } from "../svgImages";
+<<<<<<< src/components/section.js
+import { Form, Input, Button, DatePicker, Row, Col, Menu, Dropdown, Typography ,Divider} from "antd";
+=======
 import { Form, Input, Button, DatePicker, Row, Col, Menu, Dropdown, Typography } from "antd";
 
+>>>>>>> src/components/section.js
 import { DeleteOutlined, EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import "./quicktask.css";
+import SectionForm from "./sectionForm";
 
 const { Title } = Typography;
 class Section extends Component {
@@ -40,6 +45,7 @@ class Section extends Component {
     this.setState({
       input: e.target.value,
     });
+
   };
 
   updateNewInput = e => {
@@ -50,18 +56,15 @@ class Section extends Component {
     });
   };
 
-  insertSection = () => {
-    let sectionName = this.state.input;
-    this.setState({
-      input: "",
-    });
-    console.log(sectionName);
-    this.props.insertNewSection(this.props.projectId, sectionName);
+  insertSection = (name) => {
+    this.props.insertNewSection(this.props.projectId, name);
 
     this.setState({
       showSection: !this.state.showSection,
     });
   };
+
+
   updateSection = () => {
     let editSectionName = this.state.newInput;
     console.log(editSectionName);
@@ -187,35 +190,16 @@ class Section extends Component {
           </Row>
         </Form>
 
-        <div className='add-section' onClick={this.addSection}>
-          <hr />
-          <span className='add-section-text'>Add section</span>
-          <hr />
-        </div>
-        <Form className={`${!this.state.showSection ? "displayhide" : ""}`}>
-          <Row style={{ margin: "5px" }}>
-            <Input
-              style={{ lineHeight: "30px" }}
-              value={this.state.input}
-              onChange={this.updateInput}
-            />
-          </Row>
-          <Row>
-            <Col md={8}>
-              <Button
-                htmlType='submit'
-                onClick={this.insertSection}
-                disabled={this.state.input === ""}
-                style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
-              >
-                Add Section
-              </Button>
-              <Button className='cancelbtn' onClick={this.addSection}>
-                Cancel
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+
+        <Divider  onClick={this.addSection} >
+          <span >Add section</span>
+          </Divider>
+
+          { !this.state.showSection ? 
+        "":<SectionForm  handleCancelSection={this.addSection}
+        handleAddSection={(name)=>this.insertSection(name)}/>
+      }
+
       </>
     );
   }

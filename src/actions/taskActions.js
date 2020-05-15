@@ -6,7 +6,6 @@ export const fetchTasks = () => dispatch =>
   API.get("tasks").then(tasks => dispatch({ type: FECTH_TASKS, payload: tasks.data }));
 
 export const createTask = taskData => dispatch => {
-  console.log(taskData);
   const data = { ...taskData };
   API.post("tasks", data).then(task => dispatch({ type: ADD_TASK, payload: task.data }));
 };
@@ -24,3 +23,4 @@ export const deleteTask = (projectId, taskId) => dispatch => {
     dispatch({ type: DELETE_TASK, payload: { projectId, taskId } })
   );
 };
+

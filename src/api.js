@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const token = "eb0f1a8fbf3eff7c4bb0d62b17c63669c400becd";
+const token = "854c6cd13fed37da1a7b2209c715659e6dadec49";
 
 export default axios.create({
   baseURL: "https://api.todoist.com/rest/v1/",

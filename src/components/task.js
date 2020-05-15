@@ -4,14 +4,18 @@ import "./task.css";
 
 //Antd Copmponents
 import { Checkbox, Divider } from "antd";
+import { CheckCircleFilled } from "@ant-design/icons";
+
+//Components
+import { EditIcon, ScheduleIcon, MenuIcon } from "../svgImages";
 import { CheckCircleFilled, DeleteOutlined } from "@ant-design/icons";
 
 //Components
-import { EditIcon, ScheduleIcon } from "../svgImages";
 import colors from "../colors";
 import TaskForm from "./taskForm";
 
 import { deleteTask } from "../actions/taskActions";
+
 
 const todaysDate = new Date();
 
@@ -91,3 +95,4 @@ const mapStateToProps = state => ({
   projects: state.projectReducer.projects,
 });
 export default connect(mapStateToProps, { deleteTask })(Task);
+

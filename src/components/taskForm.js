@@ -10,8 +10,7 @@ import { ProjectIcon, PriorityIcon } from "../svgImages";
 import colors from "../colors";
 
 //Actions
-import { createTask } from "../actions/taskActions";
-import { updateTask } from "../actions/taskActions";
+import { createTask,updateTask } from "../actions/taskActions";
 
 const todaysDate = new Date();
 
@@ -66,7 +65,6 @@ class TaskForm extends Component {
       const content = this.state.taskName;
       this.props.updateTask(this.state.projectId, this.state.taskId, content);
     }
-
     this.props.handleCancelTask();
   };
 
@@ -136,3 +134,4 @@ class TaskForm extends Component {
 
 const mapStateToProps = state => ({ projects: state.projectReducer.projects });
 export default connect(mapStateToProps, { createTask, updateTask })(TaskForm);
+
