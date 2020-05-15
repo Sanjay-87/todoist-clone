@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Button,  Row, Col} from "antd";
+import { Form, Input, Button,  Row} from "antd";
 
 class SectionForm extends Component {
   state = {

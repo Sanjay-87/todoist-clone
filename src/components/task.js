@@ -4,11 +4,10 @@ import "./task.css";
 
 //Antd Copmponents
 import { Checkbox, Divider } from "antd";
-import { CheckCircleFilled } from "@ant-design/icons";
+import { CheckCircleFilled, DeleteOutlined } from "@ant-design/icons";
 
 //Components
-import { EditIcon, ScheduleIcon, MenuIcon } from "../svgImages";
-import { CheckCircleFilled, DeleteOutlined } from "@ant-design/icons";
+import { EditIcon, ScheduleIcon} from "../svgImages";
 
 //Components
 import colors from "../colors";

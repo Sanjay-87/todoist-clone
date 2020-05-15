@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { Typography, Divider } from "antd";
-
-import colors from "../colors";
-import Task from "./task";
-
 //Antd Components
 import { Typography, Divider } from "antd";
 
