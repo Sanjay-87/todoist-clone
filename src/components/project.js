@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import SectionForm from "./sectionForm";
 
-import { fetchSections ,onDeleteSection,insertSection,updateSection} from "../actions/sectionActions";
-
-
+//Action Creators
+import { fetchSections, onDeleteSection,insertSection,updateSection} from "../actions/sectionActions";
+import {fetchTasks} from "../actions/taskActions";
 import Section from "./section";
 
+
+//Design Components
 import {
   ProjectIcon,
   LabelIcon,
@@ -17,21 +20,21 @@ import {
   CommentIcon,
   MenuIcon,
 } from "../svgImages";
-import { Form, Input, Button, DatePicker, Typography, Row, Col, Checkbox } from "antd";
+import { Form, Input, Button, DatePicker, Typography, Row, Col, Checkbox,Divider} from "antd";
 import "./quicktask.css";
+
 
 const { Title } = Typography;
 
 class Project extends Component {
   state = {
-    input: "",
     showform: false,
     showSection: false,
   };
 
-  onFinish = values => {
-    // console.log(values);
-  };
+  // onFinish = values => {
+  //   // console.log(values);
+  // };
   onChange = (date, dateString) => {
     console.log(date, dateString);
   };
@@ -44,63 +47,68 @@ class Project extends Component {
   checkbox = e => {
     console.log(`checked = ${e.target.checked}`);
   };
+  
   addSection = () => {
     this.setState({
       showSection: !this.state.showSection,
     });
   };
+
   componentDidMount() {
-    // console.log(this.props.match.params);
     this.props.fetchSection();
   }
-  updateInput = e => {
-    //   console.log(e.target.value)
-    //   console.log("jhsd");
-    this.setState({
-      input: e.target.value,
-    });
-  };
+ 
 
-  insertFirstSection = () => {
-    let sectionName = this.state.input;
-    this.setState({
-      input: "",
-    });
-    // console.log(sectionName);
-    this.props.insertSection(this.props.match.params.id, sectionName);
-
+  insertFirstSection = (name) => {
+    this.props.insertSection(this.props.match.params.id, name);
     this.setState({
       showSection: !this.state.showSection,
     });
   };
 
   render() {
+
+    let arrayOfTask = []
+    Object.entries(this.props.tasks).forEach(project=>{
+      if(project[0] === this.props.match.params.id){ 
+        arrayOfTask = project[1];
+      }
+    })
+console.log(arrayOfTask);
     return (
       <>
+      {/* project name */}
         <Col md={24}>
           <Title level={3}> {this.props.match.params.name}</Title>
         </Col>
-        <Row>
-          <Col md={15}>
-            <Checkbox onChange={this.checkbox} style={{ marginRight: "20px" }} />
-            <span style={{ color: "#333" }}>task name</span>
-          </Col>
-
-          <Col md={4} offset={5}>
-            <Button className='btn-icon'>
-              <EditIcon />
-            </Button>
-            <Button className='btn-icon'>
-              <ScheduleIcon />
-            </Button>
-            <Button className='btn-icon'>
-              <CommentIcon />
-            </Button>
-            <Button className='btn-icon'>
-              <MenuIcon />
-            </Button>
-          </Col>
-        </Row>
+        {/* Task component */}  
+        {arrayOfTask.map(task=>(
+            <Row style={{ margin: "10px 0px 5px 0px" }}>
+            <Col md={15}>
+              <Checkbox onChange={this.checkbox} style={{ marginRight: "20px" }} />
+              <span style={{ fontSize: 15, color: "black" }}>{task.content}</span>
+            </Col>
+  
+            <Col md={4} offset={5}>
+              <Button className='btn-icon'>
+                <EditIcon />
+              </Button>
+              <Button className='btn-icon'>
+                <ScheduleIcon />
+              </Button>
+              <Button className='btn-icon'>
+                <CommentIcon />
+              </Button>
+              <Button className='btn-icon'>
+                <MenuIcon />
+              </Button>
+            </Col>
+            <Divider style={{ margin: 0 }} />
+          </Row>
+           
+    ))
+        }
+       
         <Row>
           <Button
             type='link'
@@ -131,7 +139,7 @@ class Project extends Component {
                 Cancel
               </Button>
             </Col>
-            <Col md={4} offset={12}>
+            <Col md={4} offset={12} >
               <Button className='btn-icon'>
                 <ProjectIcon />
               </Button>
@@ -147,36 +155,17 @@ class Project extends Component {
             </Col>
           </Row>
         </Form>
-        <div className='add-section' onClick={this.addSection}>
-          <hr />
-          <span className='add-section-text'>Add section</span>
-          <hr />
-        </div>
-        <Form className={`${!this.state.showSection ? "displayhide" : ""}`}>
-          <Row style={{ margin: "5px" }}>
-            <Input
-              style={{ lineHeight: "30px" }}
-              value={this.state.input}
-              onChange={this.updateInput}
-            />
-          </Row>
-          <Row>
-            <Col md={8}>
-
-              <Button htmlType='submit' className='addbtn'
-              disabled={this.state.input === ""}
-               style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
-              onClick={this.insertFirstSection}>
-                Add Section
-              </Button>
-              <Button className='cancelbtn' onClick={this.addSection}>
-                Cancel
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-
-
+        
+         {/* <div  onClick={this.addSection}  */}
+           <Divider  onClick={this.addSection} >
+          <span >Add section</span>
+          </Divider>
+       {/* Section Form */}
+      { !this.state.showSection ? 
+        "":<SectionForm  handleCancelSection={this.addSection}
+        handleAddSection={(name)=>this.insertFirstSection(name)}/>
+      }
+  
            {
            this.props.listofsection
                 .filter(sectionData => `${sectionData.project_id}` === (this.props.match.params.id))
@@ -185,7 +174,8 @@ class Project extends Component {
                deleteSection={()=>this.props.onDeleteSection(sectionData.id)}
                insertNewSection={this.props.insertSection}
                projectId={sectionData.project_id}
-               insertUpdatedSection={this.props.updateSection} />
+               insertUpdatedSection={this.props.updateSection} 
+               taskDetail={this.props.tasks}/>
              )
              )}
       </>
@@ -195,6 +185,7 @@ class Project extends Component {
 
 const mapStateToProps = (state)=> ({ 
              listofsection: state.sectionReducer.section,
+             tasks: state.taskReducer.tasks,
 
             });
             const mapDispatchToProps =(dispatch)=>{
@@ -203,7 +194,8 @@ const mapStateToProps = (state)=> ({
                   onDeleteSection: (id)=> dispatch(onDeleteSection(id)),
                   insertSection: (projectId,name)=>dispatch(insertSection(projectId,name)),
                   updateSection: (sectionId,updatedName)=>dispatch(updateSection(sectionId,updatedName)),
-              };
+                  fetchTasks: ()=> dispatch(fetchTasks()),
+                };
           };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Project);

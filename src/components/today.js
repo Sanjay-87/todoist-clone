@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  CheckCircleFilled,
-  DeleteOutlined,
-  EditOutlined,
-  EllipsisOutlined,
-} from "@ant-design/icons";
-import { Typography, Checkbox, Divider, Dropdown, Menu, Button } from "antd";
+import TaskForm from "./taskForm";
 
-import "./quicktask.css";
+import { Typography, Divider } from "antd";
 
 import colors from "../colors";
+import Task from "./task";
 
 const { Title } = Typography;
 
@@ -52,7 +47,11 @@ class Today extends Component {
     //filtering the task which belong to today
     const todayTasks = [];
     Object.entries(this.props.tasks).forEach(project => {
-      project[1].forEach(task => task.due === undefined || todayTasks.push(task));
+      project[1].forEach(task => {
+        if (task.due !== undefined) {
+          task.due.date !== todaysDate.toISOString().slice(0, 10) || todayTasks.push(task);
+        }
+      });
     });
 
     return (
@@ -69,50 +68,15 @@ class Today extends Component {
             const projectColor = colors[`${projectData.color}`].colorId;
 
             return (
-              <div>
-                <div style={{ margin: "10px 0px 5px 0px" }}>
-                  <Checkbox key={`${task.project_id}/${task.id}`}>
-                    <span style={{ fontSize: 15, color: "black" }}>{task.content}</span>
-                  </Checkbox>
-
-                  {/* <Dropdown
-                    overlay={
-                      <Menu style={{ width: 200 }} onClick={console.log("update")}>
-                        <Menu.Item key={`editTask/`}>
-                          <EditOutlined style={{ fontSize: 18 }} />
-                          <span>Edit Task</span>
-                        </Menu.Item>
-                        <Menu.Divider />
-                        <Menu.Item key={`deleteTask/`}>
-                          <DeleteOutlined style={{ fontSize: 18 }} />
-                          <span>Delete Task</span>
-                        </Menu.Item>
-                      </Menu>
-                    }
-                    placement='bottomLeft'
-                    trigger={["click"]}
-                  >
-                    <Button
-                      ghost
-                      size='small'
-                      style={{ borderStyle: "none", float: "right" }}
-                      onClick={e => e.stopPropagation()}
-                    >
-                      <EllipsisOutlined style={{ fontSize: 25, color: "#808080" }} />
-                    </Button>
-                  </Dropdown> */}
-                </div>
-                <div>
-                  <span style={{ float: "right", marginBottom: 5 }}>
-                    <span style={{ marginRight: 10, color: "#808080" }}>{projectData.name}</span>
-                    <CheckCircleFilled style={{ color: `${projectColor}` }} />
-                  </span>
-                </div>
-                <Divider style={{ margin: 0 }} />
-              </div>
+              <Task
+                type='today'
+                projectData={{ projectTitle: projectData.name, projectColor }}
+                taskData={task}
+              />
             );
           })}
         </div>
+        <TaskForm />
       </div>
     );
   }
