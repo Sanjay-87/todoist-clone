@@ -36,6 +36,7 @@
 .plus-btn-content {
   color: gray;
 }
+
 .ant-divider-inner-text{
   color: transparent;
   
@@ -69,7 +70,4 @@
     content: '';
     cursor: pointer;
   }
-  
-
-  
 

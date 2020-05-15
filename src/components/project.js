@@ -131,8 +131,11 @@ console.log(arrayOfTask);
 
           <Row>
             <Col md={8}>
-              <Button htmlType='submit' className='addbtn' 
-              style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}>
+              <Button
+                htmlType='submit'
+                className='addbtn'
+                style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
+              >
                 Add task
               </Button>
               <Button className='cancelbtn' onClick={this.addTask}>
@@ -155,6 +158,7 @@ console.log(arrayOfTask);
             </Col>
           </Row>
         </Form>
+
         
          {/* <div  onClick={this.addSection}  */}
            <Divider  onClick={this.addSection} >
@@ -182,7 +186,6 @@ console.log(arrayOfTask);
     );
   }
 }
-
 const mapStateToProps = (state)=> ({ 
              listofsection: state.sectionReducer.section,
              tasks: state.taskReducer.tasks,
@@ -197,5 +200,6 @@ const mapStateToProps = (state)=> ({
                   fetchTasks: ()=> dispatch(fetchTasks()),
                 };
           };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Project);
