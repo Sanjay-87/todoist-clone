@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { fetchSections ,onDeleteSection,insertSection,updateSection} from "../actions/sectionActions";
-
+import {
+  fetchSections,
+  onDeleteSection,
+  insertSection,
+  updateSection,
+} from "../actions/sectionActions";
 
 import Section from "./section";
 
@@ -123,8 +127,11 @@ class Project extends Component {
 
           <Row>
             <Col md={8}>
-              <Button htmlType='submit' className='addbtn' 
-              style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}>
+              <Button
+                htmlType='submit'
+                className='addbtn'
+                style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
+              >
                 Add task
               </Button>
               <Button className='cancelbtn' onClick={this.addTask}>
@@ -162,11 +169,13 @@ class Project extends Component {
           </Row>
           <Row>
             <Col md={8}>
-
-              <Button htmlType='submit' className='addbtn'
-              disabled={this.state.input === ""}
-               style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
-              onClick={this.insertFirstSection}>
+              <Button
+                htmlType='submit'
+                className='addbtn'
+                disabled={this.state.input === ""}
+                style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
+                onClick={this.insertFirstSection}
+              >
                 Add Section
               </Button>
               <Button className='cancelbtn' onClick={this.addSection}>
@@ -176,34 +185,32 @@ class Project extends Component {
           </Row>
         </Form>
 
-
-           {
-           this.props.listofsection
-                .filter(sectionData => `${sectionData.project_id}` === (this.props.match.params.id))
-                .map((sectionData) => (
-              <Section  sectionDetail={sectionData}
-               deleteSection={()=>this.props.onDeleteSection(sectionData.id)}
-               insertNewSection={this.props.insertSection}
-               projectId={sectionData.project_id}
-               insertUpdatedSection={this.props.updateSection} />
-             )
-             )}
+        {this.props.listofsection
+          .filter(sectionData => `${sectionData.project_id}` === this.props.match.params.id)
+          .map(sectionData => (
+            <Section
+              sectionDetail={sectionData}
+              deleteSection={() => this.props.onDeleteSection(sectionData.id)}
+              insertNewSection={this.props.insertSection}
+              projectId={sectionData.project_id}
+              insertUpdatedSection={this.props.updateSection}
+            />
+          ))}
       </>
     );
   }
 }
 
-const mapStateToProps = (state)=> ({ 
-             listofsection: state.sectionReducer.section,
-
-            });
-            const mapDispatchToProps =(dispatch)=>{
-              return {
-                  fetchSection: ()=> dispatch(fetchSections()),
-                  onDeleteSection: (id)=> dispatch(onDeleteSection(id)),
-                  insertSection: (projectId,name)=>dispatch(insertSection(projectId,name)),
-                  updateSection: (sectionId,updatedName)=>dispatch(updateSection(sectionId,updatedName)),
-              };
-          };
+const mapStateToProps = state => ({
+  listofsection: state.sectionReducer.section,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchSection: () => dispatch(fetchSections()),
+    onDeleteSection: id => dispatch(onDeleteSection(id)),
+    insertSection: (projectId, name) => dispatch(insertSection(projectId, name)),
+    updateSection: (sectionId, updatedName) => dispatch(updateSection(sectionId, updatedName)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Project);
