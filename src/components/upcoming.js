@@ -4,15 +4,18 @@ import { connect } from "react-redux";
 import { Typography, Calendar } from "antd";
 import "./calender.css";
 import Task from "./task";
+
 const { Title } = Typography;
 
 const todaysDate = new Date();
+
 class Upcoming extends Component {
   state = {
     Upcomingtasks: [],
     value: moment(todaysDate.toISOString().slice(0, 10)),
     selectedValue: moment(todaysDate.toISOString().slice(0, 10)),
   };
+
   getListData = value => {
     Object.entries(this.props.tasks).forEach(project => {
       project[1].forEach(task => {
