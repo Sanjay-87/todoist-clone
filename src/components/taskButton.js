@@ -16,7 +16,11 @@ class TaskButton extends Component {
 
   render() {
     return this.state.taskForm ? (
-      <TaskForm type={this.props.type} handleCancelTask={this.OnCancelTask} />
+     <TaskForm
+        type={this.props.type}
+        handleCancelTask={this.OnCancelTask}
+        date={this.props.date}
+      />
     ) : (
       <Button block style={{ textAlign: "left", borderStyle: "none" }} onClick={this.onAddTask}>
         <PlusOutlined style={{ color: "#db4035" }} />

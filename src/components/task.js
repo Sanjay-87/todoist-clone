@@ -78,7 +78,11 @@ class Task extends Component {
             </div>
           </div>
         ) : (
-          <TaskForm type='edit' taskData={taskData} handleCancelTask={this.OnCancelTask} />
+           type="edit"
+            taskData={taskData}
+            handleCancelTask={this.OnCancelTask}
+            date={this.props.date}
+          />
         )}
         <Divider style={{ margin: 0 }} />
       </React.Fragment>

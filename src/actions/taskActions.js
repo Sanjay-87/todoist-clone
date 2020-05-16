@@ -17,10 +17,16 @@ export const createTask = taskData => dispatch => {
   API.post("tasks", data).then(task => dispatch({ type: ADD_TASK, payload: task.data }));
 };
 
-export const updateTask = (projectId, taskId, content) => dispatch => {
-  const data = { content };
-  API.post(`tasks/${taskId}`, data).then(res =>
-    dispatch({ type: UPDATE_TASK, payload: { projectId, taskId, content } })
+export const updateTask = (projectId, taskId, content, due_date) => (
+  dispatch
+) => {
+  const data = { content, due_date };
+  console.log(data);
+  API.post(`tasks/${taskId}`, data).then((res) =>
+    dispatch({
+      type: UPDATE_TASK,
+      payload: { projectId, taskId, content, due_date },
+    })
   );
 };
 
@@ -34,3 +40,4 @@ export const closeTask = task => dispatch =>
 
 export const reopenTask = task => dispatch =>
   API.post(`tasks/${task.id}/reopen`).then(res => dispatch({ type: REOPEN_TASK, payload: task }));
+

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import moment from "moment";
+import moment from "moment";
 
 //Ant design components
 import { Form, Input, Button, DatePicker, Row, Col, Menu, Dropdown } from "antd";
@@ -52,19 +52,26 @@ class TaskForm extends Component {
     }
   };
 
-  onAddOrSaveTask = () => {
-    if (this.state.type === "add") {
+ onAddOrSaveTask = () => {
+    if (this.state.type === 'add') {
       const taskData = { content: this.state.taskName };
-      if (this.state.dueDate !== "") taskData.due_date = this.state.dueDate;
-      if (this.state.sectionId !== "") {
+      if (this.state.dueDate !== '') taskData.due_date = this.state.dueDate;
+      if (this.state.sectionId !== '') {
         taskData.section_id = parseInt(this.state.sectionId);
-      } else if (this.state.projectId !== "") {
+      } else if (this.state.projectId !== '') {
         taskData.project_id = parseInt(this.state.projectId);
       }
+      console.log(taskData);
       this.props.createTask(taskData);
     } else {
       const content = this.state.taskName;
-      this.props.updateTask(this.state.projectId, this.state.taskId, content);
+      const date = this.state.dueDate;
+      this.props.updateTask(
+        this.state.projectId,
+        this.state.taskId,
+        content,
+        date
+      );
     }
     this.props.handleCancelTask();
   };
@@ -98,7 +105,11 @@ class TaskForm extends Component {
             <Input size='large' value={`${this.state.taskName}`} onChange={this.onTaskNameChange} />
           </Col>
           <Col>
-            <DatePicker size='large' onChange={this.onDateSelect} />
+           <DatePicker
+              size="large"
+              onChange={this.onDateSelect}
+              defaultValue={moment(this.props.date)}
+            />
           </Col>
         </Row>
 
