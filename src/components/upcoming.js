@@ -6,9 +6,7 @@ import './calender.css';
 import Task from './task';
 import TaskButton from './taskButton';
 import { updateTask } from '../actions/taskActions';
-
 const { Title } = Typography;
-
 const todaysDate = new Date();
 class Upcoming extends Component {
   state = {
@@ -17,7 +15,6 @@ class Upcoming extends Component {
     selectedValue: moment(todaysDate.toISOString().slice(0, 10)),
     RescheduleDate: '',
   };
-
   getListData = (value) => {
     let listData = [];
     if (this.state.Upcomingtasks.includes(value.format('YYYY-MM-DD'))) {
@@ -57,12 +54,10 @@ class Upcoming extends Component {
   onPanelChange = (value) => {
     this.setState({ value });
   };
-
   onChange = (date, dateString) => {
     // console.log(date, dateString);
     this.setState({ RescheduleDate: dateString });
   };
-
   render() {
     console.log(this.state.RescheduleDate);
     const overduetasks = [];
@@ -74,24 +69,20 @@ class Upcoming extends Component {
         }
       });
     });
-
     const Upcomingdates = [];
     Object.entries(this.props.tasks).forEach((project) => {
       project[1].forEach((task) => {
         if (task.due !== undefined) {
           task.due.date > todaysDate.toISOString().slice(0, 10) &&
             Upcomingdates.push(task);
-
           task.due.date > todaysDate.toISOString().slice(0, 10) &&
             !this.state.Upcomingtasks.includes(task.due.date) &&
             this.state.Upcomingtasks.push(task.due.date);
         }
       });
     });
-
     const { value, selectedValue, Upcomingtasks } = this.state;
     var newdate = new Date(selectedValue.format('YYYY-MM-DD'));
-
     const selectedtasks = [];
     Object.entries(this.props.tasks).forEach((project) => {
       project[1].forEach((task) => {
@@ -101,7 +92,6 @@ class Upcoming extends Component {
         }
       });
     });
-
     return (
       <div>
         <Title level={4}>Upcoming</Title>
@@ -153,7 +143,6 @@ class Upcoming extends Component {
             return null;
           })
         )}
-        ​
         {Upcomingtasks.map((date) => {
           var dateString = new Date(date);
           return (

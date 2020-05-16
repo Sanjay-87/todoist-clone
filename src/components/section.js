@@ -1,83 +1,40 @@
 import React, { Component } from "react";
-import { ProjectIcon, LabelIcon, PriorityIcon, ReminderIcon, PlusIcon } from "../svgImages";
-import { Form, Input, Button, DatePicker, Row, Col, Menu, Dropdown, Typography } from "antd";
-
+//Antd Copmponents
+import { Button, Row, Col, Menu, Dropdown, Typography, Divider } from "antd";
 import { DeleteOutlined, EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import "./quicktask.css";
-
+//Components
+import SectionForm from "./sectionForm";
+import Task from "./task";
+import TaskButton from "./taskButton";
 const { Title } = Typography;
 class Section extends Component {
   state = {
-    showform: false,
     showSection: false,
-    input: "",
     showName: false,
-    newInput: "",
   };
-
-  onFinish = values => {
-    // console.log(values);
-  };
-  onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
-
-  addTask = () => {
-    this.setState({
-      showform: !this.state.showform,
-    });
-  };
-
   addSection = () => {
     this.setState({
       showSection: !this.state.showSection,
     });
   };
-
-  updateInput = e => {
-    //   console.log(e.target.value)
-    //   console.log("jhsd");
-    this.setState({
-      input: e.target.value,
-    });
-  };
-
-  updateNewInput = e => {
-    // console.log(e.target.value)
-    // console.log("jhsd");
-    this.setState({
-      newInput: e.target.value,
-    });
-  };
-
-  insertSection = () => {
-    let sectionName = this.state.input;
-    this.setState({
-      input: "",
-    });
-    console.log(sectionName);
-    this.props.insertNewSection(this.props.projectId, sectionName);
-
+  insertSection = name => {
+    this.props.insertNewSection(this.props.projectId, name);
     this.setState({
       showSection: !this.state.showSection,
     });
   };
-  updateSection = () => {
-    let editSectionName = this.state.newInput;
-    console.log(editSectionName);
-    this.props.insertUpdatedSection(this.props.sectionDetail.id, editSectionName);
-
+  updateSection = name => {
+    this.props.insertUpdatedSection(this.props.sectionDetail.id, name);
     this.setState({
       showName: !this.state.showName,
     });
   };
-
   onEditSection = () => {
     this.setState({
       showName: !this.state.showName,
     });
   };
-
   render() {
     const menu = (
       <Menu style={{ width: 200 }}>
@@ -92,7 +49,14 @@ class Section extends Component {
         </Menu.Item>
       </Menu>
     );
-
+    let arrayOfTaskOfSection = [];
+    let sectionId = this.props.sectionDetail.id;
+    Object.entries(this.props.objectOfSectionTasks).forEach(section => {
+      if (section[0] === `${sectionId}`) {
+        arrayOfTaskOfSection = section[1];
+      }
+    });
+    // console.log(sectionId);
     return (
       <>
         <Row className={`${this.state.showName ? "displayhide" : ""}`}>
@@ -113,112 +77,38 @@ class Section extends Component {
             </Dropdown>
           </Col>
         </Row>
-        <Form className={`${!this.state.showName ? "displayhide" : ""}`}>
-          <Row style={{ margin: "5px" }}>
-            <Input
-              style={{ lineHeight: "30px" }}
-              value={this.state.newInput}
-              onChange={this.updateNewInput}
-            />
-          </Row>
-          <Row>
-            <Col md={8}>
-              <Button
-                htmlType='submit'
-                style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
-                disabled={this.state.newInput === ""}
-                onClick={this.updateSection}
-              >
-                Save
-              </Button>
-              <Button className='cancelbtn' onClick={this.onEditSection}>
-                Cancel
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-
-        <Row>
-          <Button
-            type='link'
-            onClick={this.addTask}
-            className={`${this.state.showform ? "displayhide" : ""}`}
-          >
-            <PlusIcon className='plus-icon' />
-            <span className='plus-btn-content'>Add task</span>
-          </Button>
-        </Row>
-        <Form onFinish={this.onFinish()} className={`${!this.state.showform ? "displayhide" : ""}`}>
-          <Row style={{ margin: "5px" }}>
-            <Col md={20}>
-              <Input style={{ lineHeight: "30px" }} />
-            </Col>
-            <Col md={4}>
-              <DatePicker onChange={this.onChange} style={{ lineHeight: "30px" }} />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col md={8}>
-              <Button
-                htmlType='submit'
-                style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
-              >
-                Add task
-              </Button>
-              <Button className='cancelbtn' onClick={this.addTask}>
-                Cancel
-              </Button>
-            </Col>
-            <Col md={4} offset={12}>
-              <Button className='btn-icon'>
-                <ProjectIcon />
-              </Button>
-              <Button className='btn-icon'>
-                <LabelIcon />
-              </Button>
-              <Button className='btn-icon'>
-                <PriorityIcon />
-              </Button>
-              <Button className='btn-icon'>
-                <ReminderIcon />
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-
-        <div className='add-section' onClick={this.addSection}>
-          <hr />
-          <span className='add-section-text'>Add section</span>
-          <hr />
-        </div>
-        <Form className={`${!this.state.showSection ? "displayhide" : ""}`}>
-          <Row style={{ margin: "5px" }}>
-            <Input
-              style={{ lineHeight: "30px" }}
-              value={this.state.input}
-              onChange={this.updateInput}
-            />
-          </Row>
-          <Row>
-            <Col md={8}>
-              <Button
-                htmlType='submit'
-                onClick={this.insertSection}
-                disabled={this.state.input === ""}
-                style={{ backgroundColor: "#db4035", color: "white", margin: "8px" }}
-              >
-                Add Section
-              </Button>
-              <Button className='cancelbtn' onClick={this.addSection}>
-                Cancel
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+        <Divider style={{ margin: 0 }} />
+        {/* Edit Form */}
+        {!this.state.showName ? (
+          ""
+        ) : (
+          <SectionForm
+            handleCancelSection={this.onEditSection}
+            handleAddSection={name => this.updateSection(name)}
+          />
+        )}
+        {/* task component */}
+        {arrayOfTaskOfSection.map(taskOfsection => (
+          <Task type='section' taskData={taskOfsection} />
+        ))}
+        {/* <TaskForm type={`add/section/${sectionId}`} /> */}
+        {/* {console.log(sectionId)} */}
+        <TaskButton type={`add/section/${sectionId}`} />
+        {/* section btn */}
+        <Divider onClick={this.addSection}>
+          <span>Add section</span>
+        </Divider>
+        {/* section form */}
+        {!this.state.showSection ? (
+          ""
+        ) : (
+          <SectionForm
+            handleCancelSection={this.addSection}
+            handleAddSection={name => this.insertSection(name)}
+          />
+        )}
       </>
     );
   }
 }
-
 export default Section;

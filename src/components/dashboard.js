@@ -210,12 +210,10 @@ class Dashboard extends Component {
                   />
                 ) : null}
 
-                {/* Filters SubMenu */}
-              </SubMenu>
-              <SubMenu key='Filters' title='Filters' icon={<BookTwoTone />}>
-                <Menu.Item key='Filter-1'>filter-1</Menu.Item>
-                <Menu.Item key='Filter-2'>filter-2</Menu.Item>
-                <Menu.Item key='Filter-3'>filter-3</Menu.Item>
+                {/* priority SubMenu */}
+
+              <SubMenu key='priority' title='priority' icon={<BookTwoTone />}>
+                <Menu.Item key='priority-1'>priority-1</Menu.Item>
               </SubMenu>
             </Menu>
           </Sider>

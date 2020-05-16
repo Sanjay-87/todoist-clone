@@ -36,16 +36,39 @@
 .plus-btn-content {
   color: gray;
 }
-.add-section {
-  display: flex;
-  padding-top: 25px;
-  color: #db4c3f;
+
+.ant-divider-inner-text{
+  color: transparent;
+  
+} 
+
+.ant-divider-inner-text:hover{
+  color: #db4c3f !important;
   cursor: pointer;
-}
-.add-section-text {
-  width: 20%;
-  text-align: center;
-}
-hr {
-  width: 100%;
-}
+} 
+  .ant-divider-horizontal.ant-divider-with-text::before,
+   .ant-divider-horizontal.ant-divider-with-text::after {
+    position: relative;
+    top: 50%;
+    display: table-cell;
+    width: 50%;
+    border-top: none;
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%);
+    content: '';
+  }
+  
+   .ant-divider-horizontal.ant-divider-with-text:hover::before,
+   .ant-divider-horizontal.ant-divider-with-text:hover::after{
+    position: relative;
+    top: 50%;
+    display: table-cell;
+    width: 50%;
+    border-top: 1px solid #db4c3f;
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%);
+    content: '';
+    cursor: pointer;
+  }
+
+ 

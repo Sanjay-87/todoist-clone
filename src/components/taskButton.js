@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 //Antd Components
-import { Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 //Components
-import TaskForm from './taskForm';
+import TaskForm from "./taskForm";
 
 class TaskButton extends Component {
   state = { taskForm: false };
@@ -16,18 +16,14 @@ class TaskButton extends Component {
 
   render() {
     return this.state.taskForm ? (
-      <TaskForm
+     <TaskForm
         type={this.props.type}
         handleCancelTask={this.OnCancelTask}
         date={this.props.date}
       />
     ) : (
-      <Button
-        block
-        style={{ textAlign: 'left', borderStyle: 'none' }}
-        onClick={this.onAddTask}
-      >
-        <PlusOutlined style={{ color: '#db4035' }} />
+      <Button block style={{ textAlign: "left", borderStyle: "none" }} onClick={this.onAddTask}>
+        <PlusOutlined style={{ color: "#db4035" }} />
         Add Task
       </Button>
     );

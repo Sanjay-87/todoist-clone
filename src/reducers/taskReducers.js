@@ -4,9 +4,7 @@ import {
   UPDATE_TASK,
   DELETE_TASK,
 } from '../actions/actionTypes';
-
 const initialState = { tasks: {} };
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case FECTH_TASKS: {
@@ -17,7 +15,6 @@ export default (state = initialState, action) => {
       });
       return { ...state, tasks };
     }
-
     case ADD_TASK: {
       const task = action.payload;
       return {
@@ -28,7 +25,6 @@ export default (state = initialState, action) => {
         },
       };
     }
-
     case UPDATE_TASK: {
       const { projectId, taskId, content, due_date } = action.payload;
       return {
@@ -51,7 +47,6 @@ export default (state = initialState, action) => {
         },
       };
     }
-
     case DELETE_TASK: {
       const { projectId, taskId } = action.payload;
       return {
@@ -64,7 +59,6 @@ export default (state = initialState, action) => {
         },
       };
     }
-
     default:
       return state;
   }

@@ -1,11 +1,9 @@
-import axios from 'axios';
 
-const token = '8519576a40bf886b0bfa28c1a5c2ae4bf675c1b0';
+import axios from "axios";
+
+const token = "eb0f1a8fbf3eff7c4bb0d62b17c63669c400becd";
 
 export default axios.create({
-  baseURL: 'https://api.todoist.com/rest/v1/',
-  headers: {
-    Authorization: 'Bearer ' + token,
-    'Content-Type': 'application/json',
-  },
+  baseURL: "https://api.todoist.com/rest/v1/",
+  headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
 });
