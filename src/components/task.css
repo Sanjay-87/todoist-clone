@@ -1,0 +1,7 @@
+.task-update-icon {
+  display: none;
+}
+
+.task :hover .task-update-icon {
+  display: inline;
+}
