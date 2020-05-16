@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import SectionForm from "./sectionForm";
-import Task from "./task";
-import TaskButton from "./taskButton";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import SectionForm from './sectionForm';
+import Task from './task';
+import TaskButton from './taskButton';
 //Action Creators
 import {
   fetchSections,
   onDeleteSection,
   insertSection,
   updateSection,
-} from "../actions/sectionActions";
-import Section from "./section";
-import { Typography, Col, Divider } from "antd";
-import "./quicktask.css";
+} from '../actions/sectionActions';
+import Section from './section';
+import { Typography, Col, Divider } from 'antd';
+import './quicktask.css';
 const { Title } = Typography;
 class Project extends Component {
   state = {
@@ -27,7 +27,7 @@ class Project extends Component {
   componentDidMount() {
     this.props.fetchSection();
   }
-  insertFirstSection = name => {
+  insertFirstSection = (name) => {
     this.props.insertSection(this.props.match.params.id, name);
     this.setState({
       showSection: !this.state.showSection,
@@ -38,7 +38,7 @@ class Project extends Component {
     const arrayOfTask = [];
     const objectOfSectionTasks = {};
     this.props.tasks[projectId] !== undefined &&
-      this.props.tasks[projectId].forEach(task => {
+      this.props.tasks[projectId].forEach((task) => {
         if (task.section_id === 0) {
           arrayOfTask.push(task);
         } else {
@@ -57,27 +57,30 @@ class Project extends Component {
           <Title level={3}> {this.props.match.params.name}</Title>
         </Col>
         {/* Task component */}
-        {arrayOfTask.map(task => (
-          <Task type='project' taskData={task} />
+        {arrayOfTask.map((task) => (
+          <Task type="project" taskData={task} date={null} />
         ))}
         {/* <TaskForm type={`add/project/${projectId}`} /> */}
-        <TaskButton type={`add/project/${projectId}`} />
+        <TaskButton type={`add/project/${projectId}`} date={null} />
         {/* <div  onClick={this.addSection}  */}
         <Divider onClick={this.addSection}>
           <span>Add section</span>
         </Divider>
         {/* Section Form */}
         {!this.state.showSection ? (
-          ""
+          ''
         ) : (
           <SectionForm
             handleCancelSection={this.addSection}
-            handleAddSection={name => this.insertFirstSection(name)}
+            handleAddSection={(name) => this.insertFirstSection(name)}
           />
         )}
         {this.props.listofsection
-          .filter(sectionData => `${sectionData.project_id}` === this.props.match.params.id)
-          .map(sectionData => (
+          .filter(
+            (sectionData) =>
+              `${sectionData.project_id}` === this.props.match.params.id
+          )
+          .map((sectionData) => (
             <Section
               sectionDetail={sectionData}
               deleteSection={() => this.props.onDeleteSection(sectionData.id)}
@@ -92,16 +95,18 @@ class Project extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   listofsection: state.sectionReducer.section,
   tasks: state.taskReducer.tasks,
 });
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchSection: () => dispatch(fetchSections()),
-    onDeleteSection: id => dispatch(onDeleteSection(id)),
-    insertSection: (projectId, name) => dispatch(insertSection(projectId, name)),
-    updateSection: (sectionId, updatedName) => dispatch(updateSection(sectionId, updatedName)),
+    onDeleteSection: (id) => dispatch(onDeleteSection(id)),
+    insertSection: (projectId, name) =>
+      dispatch(insertSection(projectId, name)),
+    updateSection: (sectionId, updatedName) =>
+      dispatch(updateSection(sectionId, updatedName)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Project);

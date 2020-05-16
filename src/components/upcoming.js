@@ -172,7 +172,7 @@ class Upcoming extends Component {
               <Task type="today" taskData={task} />
             ))}
             <TaskButton
-              type="add/today"
+              type={`add/upcoming/${selectedValue.format('YYYY-MM-DD')}`}
               date={selectedValue.format('YYYY-MM-DD')}
             />
           </div>
