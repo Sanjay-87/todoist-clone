@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-
 //Add design components
 import { Modal } from "antd";
-
 //Components
 import TaskForm from "./taskForm";
 
@@ -17,7 +15,7 @@ class QuickAddTask extends Component {
           onCancel={this.props.handleCancelTask}
           footer={null}
         >
-          <TaskForm type='add/today' handleCancelTask={this.props.handleCancelTask} />
+         <TaskForm type='add/today' handleCancelTask={this.props.handleCancelTask} />
         </Modal>
       </div>
     );

@@ -7,7 +7,7 @@ import { Checkbox, Divider } from "antd";
 import { CheckCircleFilled, DeleteOutlined } from "@ant-design/icons";
 
 //Components
-import { EditIcon, ScheduleIcon } from "../svgImages";
+import { EditIcon, ScheduleIcon} from "../svgImages";
 
 //Components
 import colors from "../colors";

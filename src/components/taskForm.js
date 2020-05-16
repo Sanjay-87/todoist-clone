@@ -19,6 +19,7 @@ class TaskForm extends Component {
   state = { projectId: "", sectionId: "", taskId: "", taskName: "", dueDate: "", type: "" };
 
   onTaskNameChange = event => this.setState({ taskName: event.target.value });
+  
 
   onProjectSelect = project => this.setState({ projectId: project.key });
 
