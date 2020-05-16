@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import SectionForm from "./sectionForm";
 import Task from "./task";
-import TaskForm from "./taskButton";
+import TaskButton from "./taskButton";
 //Action Creators
 import {
   fetchSections,
@@ -10,7 +10,6 @@ import {
   insertSection,
   updateSection,
 } from "../actions/sectionActions";
-import { fetchTasks } from "../actions/taskActions";
 import Section from "./section";
 import { Typography, Col, Divider } from "antd";
 import "./quicktask.css";
@@ -42,8 +41,7 @@ class Project extends Component {
       this.props.tasks[projectId].forEach(task => {
         if (task.section_id === 0) {
           arrayOfTask.push(task);
-        }
-         else {
+        } else {
           if (objectOfSectionTasks[`${task.section_id}`] === undefined) {
             objectOfSectionTasks[`${task.section_id}`] = [];
             objectOfSectionTasks[`${task.section_id}`].push(task);
@@ -52,8 +50,6 @@ class Project extends Component {
           }
         }
       });
-    // console.log(arrayOfTask);
-    console.log(objectOfSectionTasks);
     return (
       <>
         {/* project name */}
@@ -64,7 +60,8 @@ class Project extends Component {
         {arrayOfTask.map(task => (
           <Task type='project' taskData={task} />
         ))}
-        <TaskForm type={`add/project/${projectId}`} />
+        {/* <TaskForm type={`add/project/${projectId}`} /> */}
+        <TaskButton type={`add/project/${projectId}`} />
         {/* <div  onClick={this.addSection}  */}
         <Divider onClick={this.addSection}>
           <span>Add section</span>
@@ -105,7 +102,6 @@ const mapDispatchToProps = dispatch => {
     onDeleteSection: id => dispatch(onDeleteSection(id)),
     insertSection: (projectId, name) => dispatch(insertSection(projectId, name)),
     updateSection: (sectionId, updatedName) => dispatch(updateSection(sectionId, updatedName)),
-    fetchTasks: () => dispatch(fetchTasks()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Project);
