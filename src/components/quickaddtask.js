@@ -17,7 +17,7 @@ class QuickAddTask extends Component {
           onCancel={this.props.handleCancelTask}
           footer={null}
         >
-          <TaskForm handleCancelTask={this.props.handleCancelTask} />
+          <TaskForm type='add/today' handleCancelTask={this.props.handleCancelTask} />
         </Modal>
       </div>
     );

@@ -1,4 +1,10 @@
-import { FECTH_TASKS, ADD_TASK, UPDATE_TASK, DELETE_TASK } from "../actions/actionTypes";
+import {
+  FECTH_TASKS,
+  ADD_TASK,
+  UPDATE_TASK,
+  DELETE_TASK,
+  CLOSE_TASK,
+} from "../actions/actionTypes";
 
 const initialState = { tasks: {} };
 
@@ -49,6 +55,17 @@ export default (state = initialState, action) => {
         tasks: {
           ...state.tasks,
           [projectId]: [...state.tasks[projectId].filter(task => task.id !== taskId)],
+        },
+      };
+    }
+
+    case CLOSE_TASK: {
+      const { project_id, id } = action.payload;
+      return {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          [project_id]: [...state.tasks[project_id].filter(task => task.id !== id)],
         },
       };
     }

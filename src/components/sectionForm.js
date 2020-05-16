@@ -1,30 +1,34 @@
 import React, { Component } from "react";
-import { Form, Input, Button,  Row, Col} from "antd";
+import { Form, Input, Button, Row } from "antd";
 
 class SectionForm extends Component {
   state = {
-       sectionName:  "", 
-    };
+    sectionName: "",
+  };
 
   onSectionNameChange = event => {
     this.setState({
-         sectionName: event.target.value 
-        });
-  }
-  
-  onCancelSection = () =>{
+      sectionName: event.target.value,
+    });
+  };
+
+  onCancelSection = () => {
     this.props.handleCancelSection();
-  } 
+  };
 
   onAddOrSaveSection = () => {
-    this.props.handleAddSection(this.state.sectionName)};
+    this.props.handleAddSection(this.state.sectionName);
+  };
   render() {
-
     return (
-      <Form >
+      <Form>
         <Row style={{ margin: "5px 0" }}>
-            <Input size='large' value={`${this.state.sectionName}`} style={{width:"100%  "}}
-            onChange={this.onSectionNameChange} />
+          <Input
+            size='large'
+            value={`${this.state.sectionName}`}
+            style={{ width: "100%  " }}
+            onChange={this.onSectionNameChange}
+          />
         </Row>
 
         <Row style={{ margin: "5px 0", display: "flex", justifyContent: "space-between" }}>

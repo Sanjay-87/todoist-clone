@@ -4,25 +4,24 @@ import "./task.css";
 
 //Antd Copmponents
 import { Checkbox, Divider } from "antd";
-import { CheckCircleFilled } from "@ant-design/icons";
+import { CheckCircleFilled, DeleteOutlined } from "@ant-design/icons";
 
 //Components
-import { EditIcon, ScheduleIcon, MenuIcon } from "../svgImages";
-import { CheckCircleFilled, DeleteOutlined } from "@ant-design/icons";
+import { EditIcon, ScheduleIcon } from "../svgImages";
 
 //Components
 import colors from "../colors";
 import TaskForm from "./taskForm";
 
-import { deleteTask } from "../actions/taskActions";
+import { deleteTask, closeTask } from "../actions/taskActions";
 
-
+// const { confirm } = Modal;
 const todaysDate = new Date();
 
 class Task extends Component {
-  state = { type: "", taskEditForm: false };
+  state = { taskEditForm: false };
 
-  onTaskStatusChange = event => console.log(event.target.key);
+  onTaskStatusChange = () => this.props.closeTask(this.props.taskData);
 
   onTaskEdit = () => this.setState({ taskEditForm: !this.state.taskEditForm });
 
@@ -31,9 +30,6 @@ class Task extends Component {
   onTaskDelete = () =>
     this.props.deleteTask(this.props.taskData.project_id, this.props.taskData.id);
 
-  componentDidMount = () => {
-    this.setState({ type: this.props.type });
-  };
   render() {
     const taskData = this.props.taskData;
     const { id, content, project_id } = taskData;
@@ -60,7 +56,7 @@ class Task extends Component {
               <Checkbox
                 style={{ margin: "8px 0px 5px 0px" }}
                 key={`${project_id}/${id}`}
-                onChange={this.onTaskStatusChange}
+                onClick={this.onTaskStatusChange}
               >
                 <span style={{ fontSize: 15, color: "black" }}>{content}</span>
               </Checkbox>
@@ -71,7 +67,7 @@ class Task extends Component {
               </div>
             </div>
             <div>
-              {this.state.type === "today" ? (
+              {this.props.type === "today" ? (
                 <span style={{ float: "right", marginBottom: 5 }}>
                   <span style={{ marginRight: 10, color: "#808080" }}>{projectTitle}</span>
                   <CheckCircleFilled style={{ color: `${projectColor}` }} />
@@ -94,5 +90,4 @@ const mapStateToProps = state => ({
   tasks: state.taskReducer.tasks,
   projects: state.projectReducer.projects,
 });
-export default connect(mapStateToProps, { deleteTask })(Task);
-
+export default connect(mapStateToProps, { deleteTask, closeTask })(Task);

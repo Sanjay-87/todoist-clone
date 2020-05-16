@@ -1,11 +1,19 @@
 import React, { Component } from "react";
 import { ProjectIcon, LabelIcon, PriorityIcon, ReminderIcon, PlusIcon } from "../svgImages";
-<<<<<<< src/components/section.js
-import { Form, Input, Button, DatePicker, Row, Col, Menu, Dropdown, Typography ,Divider} from "antd";
-=======
-import { Form, Input, Button, DatePicker, Row, Col, Menu, Dropdown, Typography } from "antd";
 
->>>>>>> src/components/section.js
+import {
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  Row,
+  Col,
+  Menu,
+  Dropdown,
+  Typography,
+  Divider,
+} from "antd";
+
 import { DeleteOutlined, EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import "./quicktask.css";
 import SectionForm from "./sectionForm";
@@ -45,7 +53,6 @@ class Section extends Component {
     this.setState({
       input: e.target.value,
     });
-
   };
 
   updateNewInput = e => {
@@ -56,14 +63,13 @@ class Section extends Component {
     });
   };
 
-  insertSection = (name) => {
+  insertSection = name => {
     this.props.insertNewSection(this.props.projectId, name);
 
     this.setState({
       showSection: !this.state.showSection,
     });
   };
-
 
   updateSection = () => {
     let editSectionName = this.state.newInput;
@@ -190,16 +196,18 @@ class Section extends Component {
           </Row>
         </Form>
 
+        <Divider onClick={this.addSection}>
+          <span>Add section</span>
+        </Divider>
 
-        <Divider  onClick={this.addSection} >
-          <span >Add section</span>
-          </Divider>
-
-          { !this.state.showSection ? 
-        "":<SectionForm  handleCancelSection={this.addSection}
-        handleAddSection={(name)=>this.insertSection(name)}/>
-      }
-
+        {!this.state.showSection ? (
+          ""
+        ) : (
+          <SectionForm
+            handleCancelSection={this.addSection}
+            handleAddSection={name => this.insertSection(name)}
+          />
+        )}
       </>
     );
   }
