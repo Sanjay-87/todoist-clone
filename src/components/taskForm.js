@@ -19,7 +19,6 @@ class TaskForm extends Component {
   state = { projectId: "", sectionId: "", taskId: "", taskName: "", dueDate: "", type: "" };
 
   onTaskNameChange = event => this.setState({ taskName: event.target.value });
-  
 
   onProjectSelect = project => this.setState({ projectId: project.key });
 
@@ -36,11 +35,9 @@ class TaskForm extends Component {
       } else if (formData[1] === "project") {
         this.setState({ projectId: formData[2] });
       } else if (formData[1] === "section") {
-        this.setState({ sectionId: parseInt(formData[3]) });
-        this.setState({ projectId: formData[2] });
+        this.setState({ sectionId: parseInt(formData[2]) });
       } else {
         this.setState({ dueDate: formData[2] });
-        console.log(formData[2]);
       }
     } else {
       const { taskData } = this.props;

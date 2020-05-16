@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 //Antd Copmponents
-import { Button, Row, Col, Menu, Dropdown, Typography ,Divider} from "antd";
+import { Button, Row, Col, Menu, Dropdown, Typography, Divider } from "antd";
 import { DeleteOutlined, EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import "./quicktask.css";
 //Components
 import SectionForm from "./sectionForm";
 import Task from "./task";
-import TaskForm from "./taskButton";
+import TaskButton from "./taskButton";
 const { Title } = Typography;
 class Section extends Component {
   state = {
@@ -18,13 +18,13 @@ class Section extends Component {
       showSection: !this.state.showSection,
     });
   };
-  insertSection = (name) => {
+  insertSection = name => {
     this.props.insertNewSection(this.props.projectId, name);
     this.setState({
       showSection: !this.state.showSection,
     });
   };
-  updateSection = (name) => {
+  updateSection = name => {
     this.props.insertUpdatedSection(this.props.sectionDetail.id, name);
     this.setState({
       showName: !this.state.showName,
@@ -49,15 +49,14 @@ class Section extends Component {
         </Menu.Item>
       </Menu>
     );
-    let arrayOfTaskOfSection=[];
-    let sectionId=this.props.sectionDetail.id;
-    Object.entries(this.props.objectOfSectionTasks).forEach(section=>{
-      if(section[0] === `${sectionId}`)
-      {
+    let arrayOfTaskOfSection = [];
+    let sectionId = this.props.sectionDetail.id;
+    Object.entries(this.props.objectOfSectionTasks).forEach(section => {
+      if (section[0] === `${sectionId}`) {
         arrayOfTaskOfSection = section[1];
       }
-    })
-    console.log(sectionId);
+    });
+    // console.log(sectionId);
     return (
       <>
         <Row className={`${this.state.showName ? "displayhide" : ""}`}>
@@ -78,25 +77,36 @@ class Section extends Component {
             </Dropdown>
           </Col>
         </Row>
-        <Divider style={{ margin: 0 }}/>
-      {/* Edit Form */}
-     {  !this.state.showName ?  "":
-     <SectionForm  handleCancelSection={this.onEditSection}
-     handleAddSection={(name)=>this.updateSection(name)}/>}
-      {/* task component */}
+        <Divider style={{ margin: 0 }} />
+        {/* Edit Form */}
+        {!this.state.showName ? (
+          ""
+        ) : (
+          <SectionForm
+            handleCancelSection={this.onEditSection}
+            handleAddSection={name => this.updateSection(name)}
+          />
+        )}
+        {/* task component */}
         {arrayOfTaskOfSection.map(taskOfsection => (
           <Task type='section' taskData={taskOfsection} />
         ))}
-        <TaskForm type={`add/section/${sectionId}`} />
+        {/* <TaskForm type={`add/section/${sectionId}`} /> */}
+        {/* {console.log(sectionId)} */}
+        <TaskButton type={`add/section/${sectionId}`} />
         {/* section btn */}
-        <Divider  onClick={this.addSection} >
-          <span >Add section</span>
-          </Divider>
-          {/* section form */}
-          { !this.state.showSection ?
-         "":<SectionForm  handleCancelSection={this.addSection}
-        handleAddSection={(name)=>this.insertSection(name)}/>
-      }
+        <Divider onClick={this.addSection}>
+          <span>Add section</span>
+        </Divider>
+        {/* section form */}
+        {!this.state.showSection ? (
+          ""
+        ) : (
+          <SectionForm
+            handleCancelSection={this.addSection}
+            handleAddSection={name => this.insertSection(name)}
+          />
+        )}
       </>
     );
   }
