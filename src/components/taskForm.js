@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+// import moment from "moment";
 
 //Ant design components
 import { Form, Input, Button, DatePicker, Row, Col, Menu, Dropdown } from "antd";
@@ -33,9 +34,12 @@ class TaskForm extends Component {
         this.setState({ dueDate: todaysDate.toISOString().slice(0, 10) });
       } else if (formData[1] === "project") {
         this.setState({ projectId: formData[2] });
-      } else {
+      } else if (formData[1] === "section") {
         this.setState({ sectionId: parseInt(formData[3]) });
         this.setState({ projectId: formData[2] });
+      } else {
+        this.setState({ dueDate: formData[2] });
+        console.log(formData[2]);
       }
     } else {
       const { taskData } = this.props;

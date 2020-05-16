@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "./task.css";
 
 //Antd Copmponents
-import { Checkbox, Divider, Modal } from "antd";
+import { Checkbox, Divider } from "antd";
 import { CheckCircleFilled, DeleteOutlined } from "@ant-design/icons";
 
 //Components
@@ -15,7 +15,7 @@ import TaskForm from "./taskForm";
 
 import { deleteTask, closeTask } from "../actions/taskActions";
 
-const { confirm } = Modal;
+// const { confirm } = Modal;
 const todaysDate = new Date();
 
 class Task extends Component {
