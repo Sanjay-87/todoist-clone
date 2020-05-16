@@ -1,49 +1,40 @@
 import React, { Component } from "react";
-
 //Antd Copmponents
 import { Button, Row, Col, Menu, Dropdown, Typography ,Divider} from "antd";
 import { DeleteOutlined, EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import "./quicktask.css";
-
 //Components
 import SectionForm from "./sectionForm";
 import Task from "./task";
 import TaskForm from "./taskButton";
-
 const { Title } = Typography;
 class Section extends Component {
   state = {
     showSection: false,
     showName: false,
   };
-
   addSection = () => {
     this.setState({
       showSection: !this.state.showSection,
     });
   };
-
   insertSection = (name) => {
     this.props.insertNewSection(this.props.projectId, name);
-
     this.setState({
       showSection: !this.state.showSection,
     });
   };
-
   updateSection = (name) => {
     this.props.insertUpdatedSection(this.props.sectionDetail.id, name);
     this.setState({
       showName: !this.state.showName,
     });
   };
-
   onEditSection = () => {
     this.setState({
       showName: !this.state.showName,
     });
   };
-
   render() {
     const menu = (
       <Menu style={{ width: 200 }}>
@@ -58,10 +49,8 @@ class Section extends Component {
         </Menu.Item>
       </Menu>
     );
-
     let arrayOfTaskOfSection=[];
     let sectionId=this.props.sectionDetail.id;
-
     Object.entries(this.props.objectOfSectionTasks).forEach(section=>{
       if(section[0] === `${sectionId}`)
       {
@@ -69,7 +58,6 @@ class Section extends Component {
       }
     })
     console.log(sectionId);
-
     return (
       <>
         <Row className={`${this.state.showName ? "displayhide" : ""}`}>
@@ -91,32 +79,26 @@ class Section extends Component {
           </Col>
         </Row>
         <Divider style={{ margin: 0 }}/>
-
       {/* Edit Form */}
      {  !this.state.showName ?  "":
      <SectionForm  handleCancelSection={this.onEditSection}
      handleAddSection={(name)=>this.updateSection(name)}/>}
-
       {/* task component */}
         {arrayOfTaskOfSection.map(taskOfsection => (
           <Task type='section' taskData={taskOfsection} />
         ))}
         <TaskForm type={`add/section/${sectionId}`} />
-
         {/* section btn */}
         <Divider  onClick={this.addSection} >
           <span >Add section</span>
           </Divider>
-
           {/* section form */}
-          { !this.state.showSection ? 
+          { !this.state.showSection ?
          "":<SectionForm  handleCancelSection={this.addSection}
         handleAddSection={(name)=>this.insertSection(name)}/>
       }
-
       </>
     );
   }
 }
-
 export default Section;

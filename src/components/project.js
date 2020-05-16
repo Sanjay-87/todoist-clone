@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import SectionForm from "./sectionForm";
 import Task from "./task";
 import TaskForm from "./taskButton";
-
 //Action Creators
 import {
   fetchSections,
@@ -11,7 +10,6 @@ import {
   insertSection,
   updateSection,
 } from "../actions/sectionActions";
-
 import { fetchTasks } from "../actions/taskActions";
 import Section from "./section";
 import { Typography, Col, Divider } from "antd";
@@ -22,14 +20,11 @@ class Project extends Component {
     showform: false,
     showSection: false,
   };
- 
- 
   addSection = () => {
     this.setState({
       showSection: !this.state.showSection,
     });
   };
-
   componentDidMount() {
     this.props.fetchSection();
   }
@@ -39,9 +34,7 @@ class Project extends Component {
       showSection: !this.state.showSection,
     });
   };
-
   render() {
-   
     const projectId = this.props.match.params.id;
     const arrayOfTask = [];
     const objectOfSectionTasks = {};
@@ -61,7 +54,6 @@ class Project extends Component {
       });
     // console.log(arrayOfTask);
     console.log(objectOfSectionTasks);
-
     return (
       <>
         {/* project name */}
@@ -69,17 +61,14 @@ class Project extends Component {
           <Title level={3}> {this.props.match.params.name}</Title>
         </Col>
         {/* Task component */}
-
         {arrayOfTask.map(task => (
           <Task type='project' taskData={task} />
         ))}
         <TaskForm type={`add/project/${projectId}`} />
-
         {/* <div  onClick={this.addSection}  */}
         <Divider onClick={this.addSection}>
           <span>Add section</span>
         </Divider>
-
         {/* Section Form */}
         {!this.state.showSection ? (
           ""
@@ -89,7 +78,6 @@ class Project extends Component {
             handleAddSection={name => this.insertFirstSection(name)}
           />
         )}
-
         {this.props.listofsection
           .filter(sectionData => `${sectionData.project_id}` === this.props.match.params.id)
           .map(sectionData => (
