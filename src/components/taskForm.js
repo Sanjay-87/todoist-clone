@@ -52,26 +52,20 @@ class TaskForm extends Component {
     }
   };
 
- onAddOrSaveTask = () => {
-    if (this.state.type === 'add') {
+  onAddOrSaveTask = () => {
+    if (this.state.type === "add") {
       const taskData = { content: this.state.taskName };
-      if (this.state.dueDate !== '') taskData.due_date = this.state.dueDate;
-      if (this.state.sectionId !== '') {
+      if (this.state.dueDate !== "") taskData.due_date = this.state.dueDate;
+      if (this.state.sectionId !== "") {
         taskData.section_id = parseInt(this.state.sectionId);
-      } else if (this.state.projectId !== '') {
+      } else if (this.state.projectId !== "") {
         taskData.project_id = parseInt(this.state.projectId);
       }
-      console.log(taskData);
       this.props.createTask(taskData);
     } else {
       const content = this.state.taskName;
       const date = this.state.dueDate;
-      this.props.updateTask(
-        this.state.projectId,
-        this.state.taskId,
-        content,
-        date
-      );
+      this.props.updateTask(this.state.projectId, this.state.taskId, content, date);
     }
     this.props.handleCancelTask();
   };
@@ -105,8 +99,8 @@ class TaskForm extends Component {
             <Input size='large' value={`${this.state.taskName}`} onChange={this.onTaskNameChange} />
           </Col>
           <Col>
-           <DatePicker
-              size="large"
+            <DatePicker
+              size='large'
               onChange={this.onDateSelect}
               defaultValue={moment(this.props.date)}
             />

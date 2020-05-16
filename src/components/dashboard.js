@@ -212,8 +212,9 @@ class Dashboard extends Component {
 
                 {/* priority SubMenu */}
 
-              <SubMenu key='priority' title='priority' icon={<BookTwoTone />}>
-                <Menu.Item key='priority-1'>priority-1</Menu.Item>
+                <SubMenu key='priority' title='priority' icon={<BookTwoTone />}>
+                  <Menu.Item key='priority-1'>priority-1</Menu.Item>
+                </SubMenu>
               </SubMenu>
             </Menu>
           </Sider>
